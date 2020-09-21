@@ -3,9 +3,11 @@
 
 template <typename Iterator>
 void hoarasort(Iterator begin, Iterator end) {
+    if (begin >= end) {
+        return;
+    }
     Iterator i = begin;
     Iterator j = std::prev(end);
-    typename std::iterator_traits<Iterator>::value_type tmp;
     typename std::iterator_traits<Iterator>::value_type x = *(begin + (end - begin) / 2);
 
     do {

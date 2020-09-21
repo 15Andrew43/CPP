@@ -3,38 +3,46 @@
 #include <string>
 #include <tuple>
 
-template <typename Iterator, typename InsertIterator, typename Cmp = std::less<typename std::iterator_traits<Iterator>::value_type>>
-InsertIterator Merge(Iterator A1, Iterator A2, Iterator B1, Iterator B2, InsertIterator C, Cmp cmp = Cmp()) {
-    while (A1 != A2 && B1 != B2) {
-        if (!cmp(*B1, *A1)) { // A <= B
-            *C = *A1; // = std::move(*A1)
-            ++C;
-            ++A1;
+template <typename Iterator, typename IteratorC, typename Cmp = std::less<typename std::iterator_traits<Iterator>::value_type>>
+IteratorC Merge(Iterator a_beg, Iterator a_end, Iterator b_beg, Iterator b_end, IteratorC c, Cmp cmp = Cmp()) {
+    while (a_beg != a_end && b_beg != b_end) {
+        if (!cmp(*b_beg, *a_beg)) { // A <= B
+            *c = *a_beg; // = std::move(*a_beg)
+            ++c;
+            ++a_beg;
         } else {
-            *C = *B1;
-            ++C;
-            ++B1;
+            *c = *b_beg;
+            ++c;
+            ++b_beg;
         }
     }
-    C = std::copy(A1, A2, C);
-    C = std::copy(B1, B2, C);
-    return C;
+    c = std::copy(a_beg, a_end, c);
+    c = std::copy(b_beg, b_end, c);
+    return c;
 }
 
 template <typename Iterator, typename Cmp = std::less<typename std::iterator_traits<Iterator>::value_type>>
-void MergeSort(Iterator beg, Iterator end, Cmp cmp = Cmp()) {
+void MergeSort(Iterator beg, Iterator end, Iterator res, Cmp cmp = Cmp()) {
     if (end - beg == 1) {
         return;
     }
     int size = end - beg;
-    std::vector<typename std::iterator_traits<Iterator>::value_type> tmp_buf; // можно сделать глобальным(или на уровень выше)
-    tmp_buf.reserve(size); // хочется resize, но вдруг нет конструктора по умолчанию
-    MergeSort(beg, beg + size/2, cmp);
-    MergeSort(beg + size/2, end, cmp);
+//    std::vector<typename std::iterator_traits<Iterator>::value_type> tmp_buf; // можно сделать глобальным(или на уровень выше)
+//    tmp_buf.reserve(size); // хочется resize, но вдруг нет конструктора по умолчанию
+    MergeSort(beg, beg + size/2, res, cmp);
+    MergeSort(beg + size/2, end, res + size/2, cmp);
     Merge(std::make_move_iterator(beg), std::make_move_iterator(beg + size/2),
           std::make_move_iterator(beg + size/2), std::make_move_iterator(end),
-          std::back_inserter(tmp_buf), cmp);
-    std::move(tmp_buf.begin(), tmp_buf.end(), beg);
+          res, cmp);
+//    std::copy(tmp_buf.begin(), tmp_buf.end(), beg);
+    std::move(res, res + size, beg);
+}
+//
+template <typename Iterator, typename Cmp = std::less<typename std::iterator_traits<Iterator>::value_type>>
+void MergeSortImpl(Iterator beg, Iterator end, Cmp cmp = Cmp()) {
+    if (end - beg <= 1) return;
+    std::vector<typename std::iterator_traits<Iterator>::value_type> tmp_buf(end - beg);
+    MergeSort(beg, end, tmp_buf.begin(), cmp);
 }
 
 bool Comp(const std::tuple<std::string, int>& first, const std::tuple<std::string, int>& second) {
@@ -58,7 +66,7 @@ int main() {
 //        std::cout << std::get<0>(abiturs[i]) << ' ' << std::get<1>(abiturs[i]) << '\n';
 //    }
 
-    MergeSort(abiturs.begin(), abiturs.end(), Comp);
+    MergeSortImpl(abiturs.begin(), abiturs.end(), Comp);
 
 
     for (int i = 0; i < n; ++i) {
