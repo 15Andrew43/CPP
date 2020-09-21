@@ -7,7 +7,9 @@
 
 
 template <typename Iterator, typename Cmp = std::less<typename std::iterator_traits<Iterator>::value_type>>
-void InplaceMerge(Iterator a_beg, Iterator a_end, Iterator b_beg, Iterator b_end, Cmp cmp = Cmp()) {
+void InplaceMerge(Iterator a_beg, Iterator b_beg, Iterator b_end, Cmp cmp = Cmp()) {
+    Iterator a_end = b_beg;
+
     size_t size_a = a_end - a_beg;
     size_t size_b = b_end - b_beg;
     if (size_a == 0 || size_b == 0) {
@@ -20,20 +22,22 @@ void InplaceMerge(Iterator a_beg, Iterator a_end, Iterator b_beg, Iterator b_end
     }
     if (size_a >= size_b) {
         Iterator m = a_beg + size_a/2;
-        Iterator n = std::lower_bound(b_beg, b_end, *m, cmp);
-        std::rotate(m, b_beg, n);
-        a_end = m + (n - b_beg);
+        Iterator n = std::lower_bound(b_beg, b_end, *m);
+//        std::rotate(m, b_beg, n);
+//        a_end = m + (n - b_beg);
+        a_end = std::rotate(m, b_beg, n);;
         b_beg = a_end;
-        InplaceMerge(a_beg, m, m, a_end);
-        InplaceMerge(b_beg, n, n, b_end);
+        InplaceMerge(a_beg, m, a_end);
+        InplaceMerge(b_beg, n, b_end);
     } else if (size_a < size_b) {
         Iterator m = b_beg + size_b/2;
-        Iterator n = std::lower_bound(a_beg, a_end, *m, cmp);
-        std::rotate(n, b_beg, m);
-        a_end = n + (m - b_beg);
+        Iterator n = std::upper_bound(a_beg, a_end, *m);
+//        std::rotate(n, b_beg, m);
+//        a_end = n + (m - b_beg);
+        a_end = std::rotate(n, b_beg, m);
         b_beg = a_end;
-        InplaceMerge(a_beg, n, n, a_end);
-        InplaceMerge(b_beg, m, m, b_end);
+        InplaceMerge(a_beg, n, a_end);
+        InplaceMerge(b_beg, m, b_end);
     }
 }
 
@@ -46,7 +50,7 @@ void InplaceMergeSort(Iterator beg, Iterator end, Cmp cmp = Cmp()) {
     InplaceMergeSort(beg, beg + size/2, cmp);
     InplaceMergeSort(beg + size/2, end, cmp);
 
-    InplaceMerge(beg, beg + size/2, beg + size/2, end, cmp);
+    InplaceMerge(beg, beg + size/2, end, cmp);
 }
 
 bool Comp(const std::tuple<std::string, int>& first, const std::tuple<std::string, int>& second) {
