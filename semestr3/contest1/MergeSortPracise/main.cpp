@@ -62,9 +62,9 @@ int main() {
         abiturs.push_back(std::make_tuple(surname + ' ' + name, info_points + math_points + rus_points));
     }
 
-//    for (int i = 0; i < n; ++i) {
-//        std::cout << std::get<0>(abiturs[i]) << ' ' << std::get<1>(abiturs[i]) << '\n';
-//    }
+    for (int i = 0; i < n; ++i) {
+        std::cout << std::get<0>(abiturs[i]) << ' ' << std::get<1>(abiturs[i]) << '\n';
+    }
 
     MergeSortImpl(abiturs.begin(), abiturs.end(), Comp);
 

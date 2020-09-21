@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
-
-std::vector<int> v;
+#include <algorithm>
 
 template <typename Iterator, typename Cmp = std::less<typename std::iterator_traits<Iterator>::value_type>>
 void InplaceMerge(Iterator a_beg, Iterator a_end, Iterator b_beg, Iterator b_end, Cmp cmp = Cmp()) {
@@ -36,18 +35,24 @@ void InplaceMerge(Iterator a_beg, Iterator a_end, Iterator b_beg, Iterator b_end
 
 
 int main() {
-    v = {1, 5, 6, 8, 12, 14, 9, 11, 12};
-    for (auto i = 0; i < v.size(); ++i) {
-        std::cout << v[i] << ' ';
+    int n;
+    std::cin >> n;
+    std::vector<int> v;
+    for (int i = 0; i < n; ++i) {
+        int d;
+        std::cin >> d;
+        v.push_back(d);
     }
-    std::cout << '\n';
-//    for (auto i = n; i < n+m; ++i) {
-//        cout << v[i] << ' ';
-//    }
-//    cout << '\n';
+    int m;
+    std::cin >> m;
+    for (int i = 0; i < m; ++i) {
+        int d;
+        std::cin >> d;
+        v.push_back(d);
+    }
 
     auto a_beg = v.begin();
-    auto a_end  = v.begin() + 6;
+    auto a_end = v.begin() + n;
     auto b_beg = a_end;
     auto b_end = v.end();
     InplaceMerge(a_beg, a_end, b_beg, b_end);
@@ -55,8 +60,5 @@ int main() {
     for (auto x: v) {
         std::cout << x << ' ';
     }
-    std::cout << '\n';
-
-    std::cout << "Hello, World!" << std::endl;
     return 0;
 }

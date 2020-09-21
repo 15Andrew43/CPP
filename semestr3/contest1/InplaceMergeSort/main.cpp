@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string>
 //#include <iterator>
+
 
 
 template <typename Iterator, typename Cmp = std::less<typename std::iterator_traits<Iterator>::value_type>>
@@ -18,7 +20,7 @@ void InplaceMerge(Iterator a_beg, Iterator a_end, Iterator b_beg, Iterator b_end
     }
     if (size_a >= size_b) {
         Iterator m = a_beg + size_a/2;
-        Iterator n = std::lower_bound(b_beg, b_end, *m);
+        Iterator n = std::lower_bound(b_beg, b_end, *m, cmp);
         std::rotate(m, b_beg, n);
         a_end = m + (n - b_beg);
         b_beg = a_end;
@@ -26,7 +28,7 @@ void InplaceMerge(Iterator a_beg, Iterator a_end, Iterator b_beg, Iterator b_end
         InplaceMerge(b_beg, n, n, b_end);
     } else if (size_a < size_b) {
         Iterator m = b_beg + size_b/2;
-        Iterator n = std::lower_bound(a_beg, a_end, *m);
+        Iterator n = std::lower_bound(a_beg, a_end, *m, cmp);
         std::rotate(n, b_beg, m);
         a_end = n + (m - b_beg);
         b_beg = a_end;
@@ -36,35 +38,55 @@ void InplaceMerge(Iterator a_beg, Iterator a_end, Iterator b_beg, Iterator b_end
 }
 
 template <typename Iterator, typename Cmp = std::less<typename std::iterator_traits<Iterator>::value_type>>
-void MergeSort(Iterator beg, Iterator end, Cmp cmp = Cmp()) {
+void InplaceMergeSort(Iterator beg, Iterator end, Cmp cmp = Cmp()) {
     size_t size = end - beg;
     if (size == 1) {
         return;
     }
-    MergeSort(beg, beg + size/2, cmp);
-    MergeSort(beg + size/2, end, cmp);
+    InplaceMergeSort(beg, beg + size/2, cmp);
+    InplaceMergeSort(beg + size/2, end, cmp);
 
     InplaceMerge(beg, beg + size/2, beg + size/2, end, cmp);
 }
 
+bool Comp(const std::tuple<std::string, int>& first, const std::tuple<std::string, int>& second) {
+    return std::get<1>(first) > std::get<1>(second);
+}
 
 int main() {
-    int n=10;
-    std::vector<int> v;
+    int n;
+    std::cin >> n;
+    std::vector<std::tuple<std::string, int>> abiturs;
+
     for (int i = 0; i < n; ++i) {
-        int d = rand() % 20;
-        v.push_back(d);
-    }
-    for (auto i: v) {
-        std::cout << i << ' ';
-    }
-    std::cout << '\n';
-
-    MergeSort(v.begin(), v.end());
-
-    for (auto i: v) {
-        std::cout << i << ' ';
+        std::string name;
+        std::string surname;
+        int info_points, math_points, rus_points;
+        std::cin >> surname >> name >> info_points >> math_points >> rus_points;
+        abiturs.push_back(std::make_tuple(surname + ' ' + name, info_points + math_points + rus_points));
     }
 
+    for (int i = 0; i < n; ++i) {
+        std::cout << std::get<0>(abiturs[i]) << ' ' << std::get<1>(abiturs[i]) << '\n';
+    }
+
+    InplaceMergeSort(abiturs.begin(), abiturs.end(), Comp);
+
+
+    for (int i = 0; i < n; ++i) {
+        std::cout << std::get<0>(abiturs[i]) << '\n';
+    }
+
+//    std::cout << Comp(std::make_tuple("a", 1 + 2 +3), std::make_tuple("b", 1 + 2 + 2));
+//    std::vector<std::tuple<std::string, int>> v;
+//    v = {std::tuple<std::string, int>("markov", 255), std::tuple<std::string, int>("sergey", 250), std::tuple<std::string, int>("petrov",264)};
+////    for (int i = 0; i < 20; ++i) {
+////        int d = rand() % 20;
+////        v.push_back(d);
+////    }
+//    InplaceMergeSort(v.begin(), v.end(), Comp);
+//    for (auto x: v) {
+//        std::cout << std::get<0>(x) << ' ' << std::get<1>(x) << '\n';
+//    }
     return 0;
 }
