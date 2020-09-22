@@ -24,18 +24,18 @@ void InplaceMerge(Iterator a_beg, Iterator b_beg, Iterator b_end, Cmp cmp = Cmp(
     if (size_a >= size_b) {
         Iterator m = a_beg + size_a/2;
         Iterator n = std::lower_bound(b_beg, b_end, *m, cmp);
-//        std::rotate(m, b_beg, n);
-//        a_end = m + (n - b_beg);
-        a_end = std::rotate(m, b_beg, n);
+        std::rotate(m, b_beg, n);
+        a_end = m + (n - b_beg);
+//        a_end = std::rotate(m, b_beg, n);
         b_beg = a_end;
         InplaceMerge(a_beg, m, a_end, cmp);
         InplaceMerge(b_beg, n, b_end, cmp);
     } else if (size_a < size_b) {
         Iterator m = b_beg + size_b/2;
         Iterator n = std::upper_bound(a_beg, a_end, *m, cmp);
-//        std::rotate(n, b_beg, m);
-//        a_end = n + (m - b_beg);
-        a_end = std::rotate(n, b_beg, m);
+        std::rotate(n, b_beg, m);
+        a_end = n + (m - b_beg);
+//        a_end = std::rotate(n, b_beg, m);
         b_beg = a_end;
         InplaceMerge(a_beg, n, a_end, cmp);
         InplaceMerge(b_beg, m, b_end, cmp);
@@ -45,7 +45,7 @@ void InplaceMerge(Iterator a_beg, Iterator b_beg, Iterator b_end, Cmp cmp = Cmp(
 template <typename Iterator, typename Cmp = std::less<typename std::iterator_traits<Iterator>::value_type>>
 void InplaceMergeSort(Iterator beg, Iterator end, Cmp cmp = Cmp()) {
     size_t size = end - beg;
-    if (size == 1) {
+    if (size <= 1) {
         return;
     }
     InplaceMergeSort(beg, beg + size/2, cmp);
@@ -55,7 +55,7 @@ void InplaceMergeSort(Iterator beg, Iterator end, Cmp cmp = Cmp()) {
 }
 
 bool Comp(const std::tuple<std::string, int>& first, const std::tuple<std::string, int>& second) {
-    return std::get<1>(first) < std::get<1>(second);
+    return std::get<1>(first) > std::get<1>(second);
 }
 
 int main() {
@@ -78,7 +78,10 @@ int main() {
     InplaceMergeSort(abiturs.begin(), abiturs.end(), Comp);
 
 
-    for (int i = n-1; i >= 0; --i) {
+//    for (int i = n-1; i >= 0; --i) {
+//        std::cout << std::get<0>(abiturs[i]) << '\n';
+//    }
+    for (int i = 0; i < n; ++i) {
         std::cout << std::get<0>(abiturs[i]) << '\n';
     }
     return 0;
