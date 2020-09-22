@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/Merge
+CMAKE_SOURCE_DIR = /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/MergeNPieces
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/Merge/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/MergeNPieces/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/Merge/cmake-build-debug/CMakeFiles /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/Merge/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/MergeNPieces/cmake-build-debug/CMakeFiles /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/MergeNPieces/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/Merge/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/MergeNPieces/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Merge
+# Target rules for targets named MergeNPieces
 
 # Build rule for target.
-Merge: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Merge
-.PHONY : Merge
+MergeNPieces: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 MergeNPieces
+.PHONY : MergeNPieces
 
 # fast build rule for target.
-Merge/fast:
-	$(MAKE) -f CMakeFiles/Merge.dir/build.make CMakeFiles/Merge.dir/build
-.PHONY : Merge/fast
+MergeNPieces/fast:
+	$(MAKE) -f CMakeFiles/MergeNPieces.dir/build.make CMakeFiles/MergeNPieces.dir/build
+.PHONY : MergeNPieces/fast
 
 main.o: main.cpp.o
 
@@ -129,7 +129,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/Merge.dir/build.make CMakeFiles/Merge.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/MergeNPieces.dir/build.make CMakeFiles/MergeNPieces.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -138,7 +138,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/Merge.dir/build.make CMakeFiles/Merge.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/MergeNPieces.dir/build.make CMakeFiles/MergeNPieces.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -147,7 +147,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/Merge.dir/build.make CMakeFiles/Merge.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/MergeNPieces.dir/build.make CMakeFiles/MergeNPieces.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -158,7 +158,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... Merge"
+	@echo "... MergeNPieces"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

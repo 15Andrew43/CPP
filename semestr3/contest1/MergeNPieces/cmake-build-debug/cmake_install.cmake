@@ -1,4 +1,4 @@
-# Install script for directory: /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/Merge
+# Install script for directory: /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/MergeNPieces
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/Merge/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/MergeNPieces/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

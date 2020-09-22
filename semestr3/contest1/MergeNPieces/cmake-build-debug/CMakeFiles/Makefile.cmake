@@ -122,5 +122,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/Merge.dir/DependInfo.cmake"
+  "CMakeFiles/MergeNPieces.dir/DependInfo.cmake"
   )

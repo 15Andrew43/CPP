@@ -44,21 +44,21 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/Merge
+CMAKE_SOURCE_DIR = /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/MergeNPieces
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/Merge/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/MergeNPieces/cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/Merge.dir/all
+all: CMakeFiles/MergeNPieces.dir/all
 
 .PHONY : all
 
 # The main recursive "clean" target.
-clean: CMakeFiles/Merge.dir/clean
+clean: CMakeFiles/MergeNPieces.dir/clean
 
 .PHONY : clean
 
@@ -68,31 +68,31 @@ preinstall:
 .PHONY : preinstall
 
 #=============================================================================
-# Target rules for target CMakeFiles/Merge.dir
+# Target rules for target CMakeFiles/MergeNPieces.dir
 
 # All Build rule for target.
-CMakeFiles/Merge.dir/all:
-	$(MAKE) -f CMakeFiles/Merge.dir/build.make CMakeFiles/Merge.dir/depend
-	$(MAKE) -f CMakeFiles/Merge.dir/build.make CMakeFiles/Merge.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/Merge/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target Merge"
-.PHONY : CMakeFiles/Merge.dir/all
+CMakeFiles/MergeNPieces.dir/all:
+	$(MAKE) -f CMakeFiles/MergeNPieces.dir/build.make CMakeFiles/MergeNPieces.dir/depend
+	$(MAKE) -f CMakeFiles/MergeNPieces.dir/build.make CMakeFiles/MergeNPieces.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/MergeNPieces/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target MergeNPieces"
+.PHONY : CMakeFiles/MergeNPieces.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/Merge.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/Merge/cmake-build-debug/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/Merge.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/Merge/cmake-build-debug/CMakeFiles 0
-.PHONY : CMakeFiles/Merge.dir/rule
+CMakeFiles/MergeNPieces.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/MergeNPieces/cmake-build-debug/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/MergeNPieces.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest1/MergeNPieces/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/MergeNPieces.dir/rule
 
 # Convenience name for target.
-Merge: CMakeFiles/Merge.dir/rule
+MergeNPieces: CMakeFiles/MergeNPieces.dir/rule
 
-.PHONY : Merge
+.PHONY : MergeNPieces
 
 # clean rule for target.
-CMakeFiles/Merge.dir/clean:
-	$(MAKE) -f CMakeFiles/Merge.dir/build.make CMakeFiles/Merge.dir/clean
-.PHONY : CMakeFiles/Merge.dir/clean
+CMakeFiles/MergeNPieces.dir/clean:
+	$(MAKE) -f CMakeFiles/MergeNPieces.dir/build.make CMakeFiles/MergeNPieces.dir/clean
+.PHONY : CMakeFiles/MergeNPieces.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
