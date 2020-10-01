@@ -11,7 +11,7 @@ class Hash {
     const size_t m = 1000000;
 public:
     Hash(): a(rand() % 1000 + 1), b(rand() % 1000 + 1) {}
-    size_t operator()(size_t x) {
+    size_t operator()(size_t x) const {
         return ( (a * x + b) % p ) % m;
     }
 };
