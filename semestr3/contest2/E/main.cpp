@@ -22,6 +22,8 @@ void GetShortestPath(const std::vector<std::vector<int>>& map, std::vector<std::
     for (int i = 0; i < map.size(); ++i) {
         for (int j = 0; j < map[0].size(); ++j) {
             if (map[i][j] == 1) {
+//                std::cout << "pep\n";
+
                 std::queue<std::pair<int, int>> q;
                 distance_map[i][j] = 0;
                 q.push(std::make_pair(i, j));
@@ -32,9 +34,9 @@ void GetShortestPath(const std::vector<std::vector<int>>& map, std::vector<std::
                     for (auto u: possible_moves) {
                         int y = u.first;
                         int x = u.second;
-                        if (distance_map[y][x] < distance_map[v.first][v.second]) {
+                        if (distance_map[y][x] > distance_map[v.first][v.second] + 1) {
                             q.push(u);
-                            distance_map[y][x] = distance_map[v.first][v.second];
+                            distance_map[y][x] = distance_map[v.first][v.second] + 1;
                         }
                     }
                 }
@@ -46,13 +48,14 @@ void GetShortestPath(const std::vector<std::vector<int>>& map, std::vector<std::
 
 
 int main() {
-    auto v = GetPossibleMoves(3, 4, std::make_pair(1, 1));
-    for (auto x: v) {
-        std::cout << x.first << ' ' << x.second << '\n';
-    }
+//    auto v = GetPossibleMoves(3, 4, std::make_pair(1, 1));
+//    for (auto x: v) {
+//        std::cout << x.first << ' ' << x.second << '\n';
+//    }
     size_t infinity = 1000000;
     int N, M;
     std::cin >> N >> M;
+
     std::vector<std::vector<int>> map;
     for (int i = 0; i < N; ++i) {
         std::vector<int> line;
@@ -63,17 +66,33 @@ int main() {
         }
         map.push_back(line);
     }
+//    for (auto line: map) {
+//        for (auto dist_to_sub: line) {
+//            std::cout << dist_to_sub << ' ';
+//        }
+//        std::cout << '\n';
+//    }
+//    std::cout << "=====================================================\n";
+
     std::vector<std::vector<int>> distance_map;
     for (int i = 0; i < N; ++i) {
         std::vector<int> line;
         for (int j = 0; j < M; ++j) {
             line.push_back(infinity);
         }
-        map.push_back(line);
+        distance_map.push_back(line);
     }
-    std::cout << "pep\n";
+//    for (auto line: distance_map) {
+//        for (auto dist_to_sub: line) {
+//            std::cout << dist_to_sub << ' ';
+//        }
+//        std::cout << '\n';
+//    }
+//    std::cout << "=====================================================\n";
+
 
     GetShortestPath(map, distance_map);
+
     for (auto line: distance_map) {
         for (auto dist_to_sub: line) {
             std::cout << dist_to_sub << ' ';
