@@ -14,7 +14,7 @@ std::vector<int> GetShortestPath(const Graph& g, int from, int to) {
     std::vector<int> parent(g.size());
     q.push(from);
     while (not q.empty()) {
-        int v = q.back();
+        int v = q.front();
         q.pop();
         for (auto u: g[v]) {
             if (distance[u] == INFINITY) {

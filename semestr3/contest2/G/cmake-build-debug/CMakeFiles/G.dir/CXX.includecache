@@ -6,17 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest2/G/main.cpp
+/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest2/G/main.cpp
 iostream
 -
 vector
 -
 queue
 -
-unordered_map
--
 utility
--
-algorithm
 -
 
