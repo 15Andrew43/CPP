@@ -3,6 +3,7 @@
 #include <queue>
 #include <unordered_map>
 #include <utility>
+#include <algorithm>
 
 
 using Coordinates = std::pair<int, int>;
@@ -34,31 +35,55 @@ int DFSVisit(const std::vector<std::vector<int>>& map,
             const Coordinates& start, std::vector<std::vector<Color>>& colors, bool& is_deapest, int& drain_cnt) {
     colors[start.first][start.second] = discovered;
     std::vector<Coordinates> possible_moves = getPossibleMoves(map, start, colors);
-    if (possible_moves.size() == 0) {
+    int hight = map[start.first][start.second];
+    if (possible_moves.size() == 0 &&
+        map[start.first-1][start.second] >= hight && map[start.first+1][start.second] >= hight &&
+        map[start.first][start.second-1] >= hight && map[start.first][start.second+1] >= hight) {
 //        return map[start.first][start.second];
+//        std::cout << "TRUE\n";
         is_deapest = true;
     }
     for (auto u: possible_moves) {
-        if (is_deapest) {
-            if (DFSVisit(map, u, colors, is_deapest, drain_cnt) != map[start.first][start.second]) {
-                is_deapest = false;
-                ++drain_cnt;
-                std:: cout << u.first << ' ' << u.second << '\n';
-                std::cout << "pep\n";
-            }
-        } else {
-            DFSVisit(map, u, colors, is_deapest, drain_cnt);
+//        std:: cout << u.first << ' ' << u.second << '\n';
+        if (colors[u.first][u.second] != undiscovered) {
+            continue;
         }
+         if (DFSVisit(map, u, colors, is_deapest, drain_cnt) != map[start.first][start.second]) {
+             if (is_deapest) {
+                 is_deapest = false;
+                 ++drain_cnt;
+//                std:: cout << u.first << ' ' << u.second << '\n';
+//                 std::cout << "pep\n";
+             }
+        }
+
     }
     colors[start.first][start.second] = processed;
     return map[start.first][start.second];
 }
 
-int DFS(const std::vector<std::vector<int>>& map, const Coordinates& start) {
-    bool is_deapest = false;
+int DFS(const std::vector<std::vector<int>>& map) {
+    std::vector<std::pair<int, std::pair<int, int>>> coord_arr;
+    for (int i = 0; i < map.size(); ++i) {
+        for (int j = 0; j < map[0].size(); ++j) {
+            if (map[i][j] != 10001) {
+                coord_arr.emplace_back(map[i][j], std::make_pair(i, j));
+            }
+        }
+    }
+    std::sort(coord_arr.begin(), coord_arr.end(), std::greater<std::pair<int, std::pair<int, int>>>());
+//    for (auto x: coord_arr) {
+//        std::cout << "ight = " << x.first << ", y = " << x.second.first << ", x = " << x.second.second << '\n';
+//    }
+//    std::cout << '\n';
     int drain_cnt = 0;
     std::vector<std::vector<Color>> colors(map.size(), std::vector<Color>(map[0].size(), undiscovered));
-    DFSVisit(map, start, colors, is_deapest, drain_cnt);
+//    std::cout << "pep\n";
+    for (auto x: coord_arr) {
+        bool is_deapest = false;
+
+        DFSVisit(map, x.second, colors, is_deapest, drain_cnt);
+    }
     return drain_cnt;
 }
 
@@ -94,6 +119,6 @@ int main() {
 //        std::cout << '\n';
 //    }
 //    std::cout << max_hight_coord.first << ' ' << max_hight_coord.second << '\n';
-    std::cout << DFS(map, max_hight_coord);
+    std::cout << DFS(map);
     return 0;
 }
