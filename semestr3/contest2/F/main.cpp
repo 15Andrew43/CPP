@@ -3,6 +3,37 @@
 #include <queue>
 #include <unordered_map>
 
+//int infinity = 1000000;
+
+//using Coordinate = std::pair<int, int>;
+
+//struct Operation {
+//    int sighn;
+//    char axis;
+//};
+
+//int getLengthToBarrier (int x, int y, Operation operation, const std::vector<std::vector<int>>& map) {
+//    int delta = 0;
+//    while (map[y][x] != 1) {
+//        if (operation.sighn == -1) {
+//            if (operation.axis == 'y') {
+//                --y;
+//            } else if (operation.axis == 'x') {
+//                --x;
+//            }
+//        } else if (operation.sighn == 1) {
+//            if (operation.axis == 'y') {
+//                ++y;
+//            } else if (operation.axis == 'x') {
+//                ++x;
+//            }
+//        }
+//        ++delta;
+//    }
+//    return delta;
+//}
+
+
 #define INFINITY 1000000
 using Coordinates = std::pair<int, int>;
 

@@ -5,21 +5,21 @@
 using Graph = std::vector<std::vector<int>>;
 
 
- bool IsBipartite(const Graph& g) {
-     std::queue<int> q;
-     std::vector<int> colors(g.size(), 0);
-     for (int i = 0; i < g.size(); ++i) {
+ bool IsBipartite(const Graph& graph) {
+     std::queue<int> queue;
+     std::vector<int> colors(graph.size(), 0);
+     for (int i = 0; i < graph.size(); ++i) {
          if (colors[i] == 0) {
-             q.push(i);
+             queue.push(i);
              colors[i] = 1;
-             while (!q.empty()) {
-                 int v = q.front();
-                 q.pop();
-                 for (auto u: g[v]) {
-                     if (colors[u] == 0) {
-                         q.push(u);
-                         colors[u] = colors[v] * (-1);
-                     } else if (colors[u] == colors[v]) {
+             while (!queue.empty()) {
+                 int vertex = queue.front();
+                 queue.pop();
+                 for (auto neighbour: graph[vertex]) {
+                     if (colors[neighbour] == 0) {
+                         queue.push(neighbour);
+                         colors[neighbour] = colors[vertex] * (-1);
+                     } else if (colors[neighbour] == colors[vertex]) {
                          return false;
                      }
                  }
@@ -31,18 +31,18 @@ using Graph = std::vector<std::vector<int>>;
 
 
 int main() {
-    int n, m;
-    std::cin >> n >> m;
+    int students_cnt, student_pair_cnt;
+    std::cin >> students_cnt >> student_pair_cnt;
 
-    Graph G(n, std::vector<int>());
+    Graph graph(students_cnt, std::vector<int>());
 
-    for (int i = 0; i < m; ++i) {
+    for (int i = 0; i < student_pair_cnt; ++i) {
         int v_from, v_to;
         std::cin >> v_from >> v_to;
-        G[v_from - 1].push_back(v_to - 1);
-        G[v_to - 1].push_back(v_from - 1);
+        graph[v_from - 1].push_back(v_to - 1);
+        graph[v_to - 1].push_back(v_from - 1);
         }
-    if (IsBipartite(G)) {
+    if (IsBipartite(graph)) {
         std::cout << "YES";
     } else {
         std::cout << "NO";
