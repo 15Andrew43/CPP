@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/Graph/main.cpp
+iostream
+-
+vector
+-
+list
+-
+exception
+-
+algorithm
+-
+
