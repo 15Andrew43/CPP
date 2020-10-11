@@ -3,24 +3,10 @@
 #include <list>
 #include <exception>
 
-class Graph {
-public:
-    virtual size_t getCntVertex() const noexcept;
-    virtual size_t getCntEdge() const noexcept;
-    virtual void addEdge(int from, int to);
-    virtual void deleteEdge(int from, int to);
-    virtual bool EdgeExist(int from, int to) const noexcept;
-    virtual bool VertexExist(int vertex) const noexcept;
-    virtual std::vector<size_t> getNeighbours(int vertex) const noexcept;
-    virtual std::vector<std::vector<size_t>> getTransposed() const noexcept;
-    virtual void Transpose() noexcept;
-    virtual void printGraph() const noexcept;
-};
-
 class AdjacecyListsGraph {
-    std::vector<std::vector<size_t>> graph_;
+    std::vector<std::list<size_t>> graph_;
 public:
-    AdjacecyListsGraph(const std::vector<std::vector<size_t>>& g) : graph_(g) {}
+    AdjacecyListsGraph(const std::vector<std::list<size_t>>& g) : graph_(g) {}
     AdjacecyListsGraph() = default;
 
     size_t getCntVertex() const noexcept {
@@ -41,7 +27,7 @@ public:
         ++new_cnt_vertex;
         size_t  old_cnt_vertex = getCntVertex();
         while (old_cnt_vertex < new_cnt_vertex) {
-            graph_.push_back(std::vector<size_t >());
+            graph_.push_back(std::list<size_t >());
             ++old_cnt_vertex;
         }
         graph_[from].push_back(to);
@@ -72,14 +58,14 @@ public:
         }
         return true;
     }
-    std::vector<size_t> getNeighbours(int vertex) const noexcept {
+    std::list<size_t> getNeighbours(int vertex) const noexcept {
         if (VertexExist(vertex)) {
             return graph_[vertex];
         }
-        return std::vector<size_t>();
+        return std::list<size_t>();
     }
-    std::vector<std::vector<size_t>> getTransposed() const noexcept {
-        std::vector<std::vector<size_t>> transposed_graph(graph_.size(), std::vector<size_t>());
+    std::vector<std::list<size_t>> getTransposed() const noexcept {
+        std::vector<std::list<size_t>> transposed_graph(graph_.size(), std::list<size_t>());
         for (size_t vertex = 0; vertex < graph_.size(); ++vertex) {
             for (auto neighbour: getNeighbours(vertex)) {
                 transposed_graph[neighbour].push_back(vertex);
@@ -102,7 +88,6 @@ public:
         }
     }
 };
-
 
 class AdjacencyMatrixGraph {
     std::vector<std::vector<size_t>> graph_;
@@ -217,18 +202,109 @@ public:
     }
 };
 
+class Graph: public AdjacecyListsGraph, AdjacencyMatrixGraph {
+    bool is_list;
+public:
+    Graph(const std::vector<std::list<size_t >> &graph)
+            : AdjacecyListsGraph(graph) {
+        is_list = true;
+    }
+    Graph(const std::vector<std::vector<size_t >>& graph)
+            : AdjacencyMatrixGraph(graph) {
+        is_list = false;
+    }
+
+    size_t getCntVertex() const noexcept {
+        if (is_list) {
+            return AdjacecyListsGraph::getCntVertex();
+        }
+        return AdjacencyMatrixGraph::getCntVertex();
+    }
+    size_t getCntEdge() const noexcept {
+        if (is_list) {
+            return AdjacecyListsGraph::getCntEdge();
+        }
+        return AdjacencyMatrixGraph::getCntEdge();
+    }
+    void addEdge(int from, int to) {
+        if (is_list) {
+            return AdjacecyListsGraph::addEdge(from, to);
+        }
+        return AdjacencyMatrixGraph::addEdge(from, to);
+    }
+    void deleteEdge(int from, int to) {
+        if (is_list) {
+            return AdjacecyListsGraph::deleteEdge(from, to);
+        }
+        return AdjacencyMatrixGraph::deleteEdge(from, to);
+    }
+
+    bool EdgeExist(int from, int to) const noexcept {
+        if (is_list) {
+            return AdjacecyListsGraph::EdgeExist(from, to);
+        }
+        return AdjacencyMatrixGraph::EdgeExist(from, to);
+    }
+    bool VertexExist(int vertex) const noexcept {
+        if (is_list) {
+            return AdjacecyListsGraph::VertexExist(vertex);
+        }
+        return AdjacencyMatrixGraph::VertexExist(vertex);
+    }
+    std::vector<size_t> getNeighbours(int vertex) const noexcept {
+        if (is_list) {
+            auto neighbours_list = AdjacecyListsGraph::getNeighbours(vertex);
+            std::vector<size_t> neighbours_vector;
+            for (auto it = neighbours_list.begin(); it != neighbours_list.end(); ++it) {
+                neighbours_vector.push_back(*it);
+            }
+            return neighbours_vector;
+        }
+        return AdjacencyMatrixGraph::getNeighbours(vertex);
+    }
+
+    std::vector<std::vector<size_t>> getTransposed() const noexcept {
+        if (is_list) {
+            auto transposed_list = AdjacecyListsGraph::getTransposed();
+            std::vector<std::vector<size_t>> res;
+            for (auto list: transposed_list) {
+                std::vector<size_t> line;
+                for (auto value: list) {
+                    line.push_back(value);
+                }
+                res.push_back(line);
+            }
+            return res;
+        }
+        return AdjacencyMatrixGraph::getTransposed();
+    }
+    void Transpose() noexcept {
+        if (is_list) {
+            return AdjacecyListsGraph::Transpose();
+        }
+        return AdjacencyMatrixGraph::Transpose();
+    }
+
+    void printGraph() const noexcept {
+        if (is_list) {
+            return AdjacecyListsGraph::printGraph();
+        }
+        return AdjacencyMatrixGraph::printGraph();
+    }
+};
 
 int main() {
-    std::vector<std::vector<size_t>> g;
+    std::vector<std::list<size_t>> g;
     for (int i = 0; i < 5; ++i) {
-        std::vector<size_t> line;
+        std::list<size_t> list;
         for (int j = 0; j < 3; ++j) {
-            line.push_back( rand() % 5);
+            list.push_back( rand() % 5);
         }
-        g.push_back(line);
+        g.push_back(list);
     }
 
     AdjacecyListsGraph graph(g);
+//    Graph graph(g);
 
     graph.printGraph();
 
@@ -268,6 +344,7 @@ int main() {
     }
 
     AdjacencyMatrixGraph graph1(gg);
+//    Graph graph(g);
 
     graph1.printGraph();
 
