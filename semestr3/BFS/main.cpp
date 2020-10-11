@@ -8,10 +8,12 @@
 
 using Graph = std::vector<std::vector<int>>;
 #define INFINITY 100500
+
 std::vector<int> GetShortestPath(const Graph& g, int from, int to) {
     std::queue<int> q;
-    std::vector<int> distance(g.size());
+    std::vector<int> distance(g.size(), 1000000);
     std::vector<int> parent(g.size());
+    distance[from] = 0;
     q.push(from);
     while (not q.empty()) {
         int v = q.front();
