@@ -118,6 +118,13 @@ public:
     AdjacencyMatrixGraph(const std::vector<std::vector<size_t>>& g) : graph_(g) {}
     AdjacencyMatrixGraph() = default;
 
+    std::vector<size_t > operator[](int i) const {
+        return graph_[i];
+    }
+    std::vector<size_t >& operator[](int i) {
+        return graph_[i];
+    }
+
     size_t getCntVertex() const noexcept {
         return graph_.size();
     }
