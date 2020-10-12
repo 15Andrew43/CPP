@@ -2,6 +2,7 @@
 #include <vector>
 #include <exception>
 #include <algorithm>
+#include <stdexcept>
 
 class Graph {
 public:
@@ -22,6 +23,13 @@ class AdjacecyListsGraph : public Graph {
 public:
     AdjacecyListsGraph(const std::vector<std::vector<size_t>>& g) : graph_(g) {}
     AdjacecyListsGraph() = default;
+
+    std::vector<size_t > operator[](int i) const {
+        return graph_[i];
+    }
+    std::vector<size_t >& operator[](int i) {
+        return graph_[i];
+    }
 
     size_t getCntVertex() const noexcept {
         return graph_.size();
