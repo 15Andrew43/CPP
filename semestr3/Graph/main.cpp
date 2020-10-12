@@ -1,23 +1,23 @@
 #include <iostream>
 #include <vector>
-#include <list>
 #include <exception>
+#include <algorithm>
 
 class Graph {
 public:
-    virtual size_t getCntVertex() const noexcept;
-    virtual size_t getCntEdge() const noexcept;
-    virtual void addEdge(int from, int to);
-    virtual void deleteEdge(int from, int to);
-    virtual bool EdgeExist(int from, int to) const noexcept;
-    virtual bool VertexExist(int vertex) const noexcept;
-    virtual std::vector<size_t> getNeighbours(int vertex) const noexcept;
-    virtual std::vector<std::vector<size_t>> getTransposed() const noexcept;
-    virtual void Transpose() noexcept;
-    virtual void printGraph() const noexcept;
+    virtual size_t getCntVertex() const noexcept = 0;
+    virtual size_t getCntEdge() const noexcept = 0;
+    virtual void addEdge(int from, int to) = 0;
+    virtual void deleteEdge(int from, int to) = 0;
+    virtual bool EdgeExist(int from, int to) const noexcept = 0;
+    virtual bool VertexExist(int vertex) const noexcept = 0;
+    virtual std::vector<size_t> getNeighbours(int vertex) const noexcept = 0;
+    virtual std::vector<std::vector<size_t>> getTransposed() const noexcept = 0;
+    virtual void Transpose() noexcept = 0;
+    virtual void printGraph() const noexcept = 0;
 };
 
-class AdjacecyListsGraph {
+class AdjacecyListsGraph : public Graph {
     std::vector<std::vector<size_t>> graph_;
 public:
     AdjacecyListsGraph(const std::vector<std::vector<size_t>>& g) : graph_(g) {}
@@ -104,7 +104,7 @@ public:
 };
 
 
-class AdjacencyMatrixGraph {
+class AdjacencyMatrixGraph : public Graph {
     std::vector<std::vector<size_t>> graph_;
 public:
     AdjacencyMatrixGraph(const std::vector<std::vector<size_t>>& g) : graph_(g) {}

@@ -1,4 +1,4 @@
-# Install script for directory: /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/Graph
+# Install script for directory: /Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/Graph
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/Graph/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/Graph/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

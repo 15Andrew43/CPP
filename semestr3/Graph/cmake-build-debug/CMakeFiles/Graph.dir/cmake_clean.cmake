@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Graph.dir/main.cpp.o"
-  "Graph"
   "Graph.pdb"
+  "Graph"
 )
 
 # Per-language clean rules from dependency scanning.
