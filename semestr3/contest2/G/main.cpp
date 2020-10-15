@@ -36,24 +36,24 @@ int BFS(const std::vector<std::vector<int>>& map) {
             if (checked[i][j]) {
                 continue;
             }
-            std::queue<Coordinates> q;
-            q.push(std::make_pair(i, j));
+            std::queue<Coordinates> queue;
+            queue.push(std::make_pair(i, j));
             bool is_deapest = true;
-            while (not q.empty()) {
-                Coordinates v = q.front();
-                checked[v.first][v.second] = true;
-                q.pop();
-                int y = v.first;
-                int x = v.second;
+            while (not queue.empty()) {
+                Coordinates coordinates = queue.front();
+                checked[coordinates.first][coordinates.second] = true;
+                queue.pop();
+                int y = coordinates.first;
+                int x = coordinates.second;
 
-                std::vector<Coordinates> possible_moves = GetPossibleMoves(map, v, checked);
+                std::vector<Coordinates> possible_moves = GetPossibleMoves(map, coordinates, checked);
 
                 if (is_deapest && (map[y-1][x] < map[y][x] || map[y+1][x] < map[y][x] || map[y][x-1] < map[y][x] || map[y][x+1] < map[y][x])) {
                     is_deapest = false;
                 }
                 for (auto u: possible_moves) {
                     checked[u.first][u.second] = true;
-                    q.push(u);
+                    queue.push(u);
                 }
             }
             if (is_deapest) {
@@ -65,15 +65,15 @@ int BFS(const std::vector<std::vector<int>>& map) {
 }
 
 int main() {
-    int n, m;
-    std::cin >> n >> m;
+    int len_y, len_x;
+    std::cin >> len_y >> len_x;
     std::vector<std::vector<int>> map;
 
-    map.emplace_back(m + 2, 10001);
-    for (int i = 0; i < n; ++i) {
+    map.emplace_back(len_x + 2, 10001);
+    for (int i = 0; i < len_y; ++i) {
         std::vector<int> line;
         line.push_back(10001);
-        for (int j = 0; j < m; ++j) {
+        for (int j = 0; j < len_x; ++j) {
             int hight;
             std::cin >> hight;
             line.push_back(hight);
@@ -81,7 +81,7 @@ int main() {
         line.push_back(10001);
         map.push_back(line);
     }
-    map.emplace_back(m + 2, 10001);
+    map.emplace_back(len_x + 2, 10001);
 
     std::cout << BFS(map);
     return 0;

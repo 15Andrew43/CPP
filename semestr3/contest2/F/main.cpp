@@ -3,39 +3,37 @@
 #include <queue>
 #include <unordered_map>
 
-//int infinity = 1000000;
+int infinity = 1000000;
 
-//using Coordinate = std::pair<int, int>;
-
-//struct Operation {
-//    int sighn;
-//    char axis;
-//};
-
-//int getLengthToBarrier (int x, int y, Operation operation, const std::vector<std::vector<int>>& map) {
-//    int delta = 0;
-//    while (map[y][x] != 1) {
-//        if (operation.sighn == -1) {
-//            if (operation.axis == 'y') {
-//                --y;
-//            } else if (operation.axis == 'x') {
-//                --x;
-//            }
-//        } else if (operation.sighn == 1) {
-//            if (operation.axis == 'y') {
-//                ++y;
-//            } else if (operation.axis == 'x') {
-//                ++x;
-//            }
-//        }
-//        ++delta;
-//    }
-//    return delta;
-//}
-
-
-#define INFINITY 1000000
 using Coordinates = std::pair<int, int>;
+
+
+
+struct Operation {
+    int sighn;
+    char axis;
+};
+
+int getLengthToBarrier (int x, int y, Operation operation, const std::vector<std::vector<int>>& map) {
+    int delta = 0;
+    while (map[y][x] != 1) {
+        if (operation.sighn == -1) {
+            if (operation.axis == 'y') {
+                --y;
+            } else if (operation.axis == 'x') {
+                --x;
+            }
+        } else if (operation.sighn == 1) {
+            if (operation.axis == 'y') {
+                ++y;
+            } else if (operation.axis == 'x') {
+                ++x;
+            }
+        }
+        ++delta;
+    }
+    return delta;
+}
 
 
 std::vector<Coordinates> getPossibleMoves(const std::vector<std::vector<int>>& map, std::pair<int, int> v) {
@@ -43,33 +41,18 @@ std::vector<Coordinates> getPossibleMoves(const std::vector<std::vector<int>>& m
     int y = v.first;
     int x = v.second;
     int delta = 0;
-    while (map[y--][x] != 1) {
-        ++delta;
-    }
+    // --y
+    delta = getLengthToBarrier(x, y, {-1, 'y'}, map);
     if (v.first - delta/2 != v.first)
         possible_moves.push_back(std::make_pair(v.first - delta/2, x));
-    y = v.first;
-    x = v.second;
-    delta = 0;
-    while (map[y++][x] != 1) {
-        ++delta;
-    }
+    // ++y
+    delta = getLengthToBarrier(x, y, {1, 'y'}, map);
     if (v.first + delta/2 != v.first)
         possible_moves.push_back(std::make_pair(v.first + delta/2, x));
-    y = v.first;
-    x = v.second;
-    delta = 0;
-    while (map[y][x--] != 1) {
-        ++delta;
-    }
+    delta = getLengthToBarrier(x, y, {-1, 'x'}, map);
     if (v.second - delta/2 != v.second)
         possible_moves.push_back(std::make_pair(y, v.second - delta/2));
-    y = v.first;
-    x = v.second;
-    delta = 0;
-    while (map[y][x++] != 1) {
-        ++delta;
-    }
+    delta = getLengthToBarrier(x, y, {1, 'x'}, map);
     if (v.second + delta/2 != v.second)
         possible_moves.push_back(std::make_pair(y, v.second + delta/2));
     return possible_moves;
@@ -77,7 +60,7 @@ std::vector<Coordinates> getPossibleMoves(const std::vector<std::vector<int>>& m
 
 int GetShortestPath(const std::vector<std::vector<int>>& map, Coordinates from, Coordinates to) {
     std::queue<Coordinates> q;
-    std::vector<std::vector<int>> distance(map.size(), std::vector<int>(map[0].size(), INFINITY));
+    std::vector<std::vector<int>> distance(map.size(), std::vector<int>(map[0].size(), infinity));
     distance[from.first][from.second] = 0;
     q.push(from);
 
@@ -85,11 +68,6 @@ int GetShortestPath(const std::vector<std::vector<int>>& map, Coordinates from, 
         Coordinates v = q.front();
         q.pop();
         std::vector<Coordinates> possible_moves = getPossibleMoves(map, v);
-//        std::cout << "====================================\nposs moves:\n";
-//        for (auto move: possible_moves) {
-//            std::cout << move.first << ' ' << move.second << '\n';
-//        }
-//        std::cout << "=====================================================";
         for (auto u: possible_moves) {
             if (distance[u.first][u.second] > distance[v.first][v.second] + 1) {
                 q.push(u);
@@ -97,7 +75,7 @@ int GetShortestPath(const std::vector<std::vector<int>>& map, Coordinates from, 
             }
         }
     }
-    if (distance[to.first][to.second] == INFINITY) {
+    if (distance[to.first][to.second] == infinity) {
         return -1;
     }
     return distance[to.first][to.second];
@@ -137,14 +115,6 @@ int main() {
         map.push_back(int_line);
     }
     map.push_back(std::vector<int>(m+2, 1));
-
-
-//    for (auto line: map) {
-//        for (auto cell: line) {
-//            std::cout << cell << ' ';
-//        }
-//        std::cout << '\n';
-//    }
 
     std::cout << GetShortestPath(map, start, finish);
 
