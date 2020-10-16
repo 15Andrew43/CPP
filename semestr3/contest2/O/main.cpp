@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <deque>
 #include <exception>
 #include <algorithm>
 #include <stdexcept>
