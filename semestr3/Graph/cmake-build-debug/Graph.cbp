@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/Graph/graph.cpp">
+			<Option target="Graph"/>
+		</Unit>
+		<Unit filename="/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/Graph/graph.h">
+			<Option target="Graph"/>
+		</Unit>
 		<Unit filename="/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/Graph/main.cpp">
 			<Option target="Graph"/>
 		</Unit>

@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/O.dir/main.cpp.o"
-  "O.pdb"
   "O"
+  "O.pdb"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -123,6 +123,33 @@ Graph/fast:
 	$(MAKE) -f CMakeFiles/Graph.dir/build.make CMakeFiles/Graph.dir/build
 .PHONY : Graph/fast
 
+graph.o: graph.cpp.o
+
+.PHONY : graph.o
+
+# target to build an object file
+graph.cpp.o:
+	$(MAKE) -f CMakeFiles/Graph.dir/build.make CMakeFiles/Graph.dir/graph.cpp.o
+.PHONY : graph.cpp.o
+
+graph.i: graph.cpp.i
+
+.PHONY : graph.i
+
+# target to preprocess a source file
+graph.cpp.i:
+	$(MAKE) -f CMakeFiles/Graph.dir/build.make CMakeFiles/Graph.dir/graph.cpp.i
+.PHONY : graph.cpp.i
+
+graph.s: graph.cpp.s
+
+.PHONY : graph.s
+
+# target to generate assembly for a file
+graph.cpp.s:
+	$(MAKE) -f CMakeFiles/Graph.dir/build.make CMakeFiles/Graph.dir/graph.cpp.s
+.PHONY : graph.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... Graph"
+	@echo "... graph.o"
+	@echo "... graph.i"
+	@echo "... graph.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
