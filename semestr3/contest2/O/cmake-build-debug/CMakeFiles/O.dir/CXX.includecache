@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest2/O/graph.h
+vector
+-
+iostream
+-
+
 /Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest2/O/main.cpp
 iostream
 -
@@ -17,4 +23,6 @@ algorithm
 -
 stdexcept
 -
+graph.h
+/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest2/O/graph.h
 

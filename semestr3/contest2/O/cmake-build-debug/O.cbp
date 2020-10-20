@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest2/O/graph.cpp">
+			<Option target="O"/>
+		</Unit>
+		<Unit filename="/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest2/O/graph.h">
+			<Option target="O"/>
+		</Unit>
 		<Unit filename="/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest2/O/main.cpp">
 			<Option target="O"/>
 		</Unit>
