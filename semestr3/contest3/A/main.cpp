@@ -59,6 +59,16 @@ std::set<int> CutVertexes(const Graph& graph) {
             DfsVisit(graph, vertex, true, dfs_status, cut_vertexes);
         }
     }
+
+    for (auto x: dfs_status.time_in) {
+        std::cout << x << ' ';
+    }
+    std::cout << '\n';
+    for (auto x: dfs_status.time_up) {
+        std::cout << x << ' ';
+    }
+    std::cout << '\n';
+
     return cut_vertexes;
 }
 
