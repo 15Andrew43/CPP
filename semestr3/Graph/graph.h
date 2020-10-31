@@ -1,6 +1,7 @@
 #ifndef GRAPH_GRAPH_H
 #define GRAPH_GRAPH_H
 
+#include <utility>
 #include <vector>
 #include <iostream>
 
@@ -17,18 +18,20 @@ public:
     virtual bool VertexExist(vertex_t vertex) const noexcept = 0;
     virtual std::vector<vertex_t> GetNeighbours(vertex_t vertex) const = 0;
     virtual void Transpose() = 0;
-    virtual Graph* Copy() const  = 0;
+//    virtual Graph* Copy() const  = 0;
+    virtual std::shared_ptr<Graph> Copy() const  = 0;
+    virtual ~Graph() {}; // "= 0", doesn't works(
 };
 
 std::ostream& operator<<(std::ostream& os, const Graph& graph);
 
-class AdjacecyListsGraph : public Graph {
+class AdjacencyListsGraph : public Graph {
     std::vector<std::vector<vertex_t>> graph_;
     edge_t edge_cnt_ = 0;
 
 public:
-    AdjacecyListsGraph(const std::vector<std::vector<vertex_t>>& graph);
-    AdjacecyListsGraph(vertex_t vertex_cnt);
+    AdjacencyListsGraph(const std::vector<std::vector<vertex_t>>& graph);
+    AdjacencyListsGraph(vertex_t vertex_cnt);
 
     vertex_t GetCntVertex() const noexcept override;
     edge_t GetCntEdge() const noexcept override;
@@ -38,7 +41,9 @@ public:
     bool VertexExist(vertex_t vertex) const noexcept override;
     std::vector<vertex_t> GetNeighbours(vertex_t vertex) const override;
     void Transpose() override;
-    Graph* Copy() const override;
+//    Graph* Copy() const override;
+    std::shared_ptr<Graph> Copy() const override; // Здесь можно поставить AdjacencyListsGraph* (ковариантный возвращаемый тип) todo!
+    ~AdjacencyListsGraph() override = default;
 };
 
 class AdjacencyMatrixGraph : public Graph {
@@ -57,6 +62,8 @@ public:
     bool VertexExist(vertex_t vertex) const noexcept override;
     std::vector<vertex_t> GetNeighbours(vertex_t vertex) const override;
     void Transpose() override;
-    Graph* Copy()const override;
+//    Graph* Copy()const override;
+    std::shared_ptr<Graph> Copy() const override; // Здесь можно поставить AdjacencyMatrixGraph* (ковариантный возвращаемый тип) todo!
+    ~AdjacencyMatrixGraph() override = default;
 };
 #endif //GRAPH_GRAPH_H

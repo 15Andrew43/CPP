@@ -6,7 +6,7 @@
 
 
 int main() {
-    AdjacecyListsGraph ggg(0);
+    AdjacencyListsGraph ggg(0);
     std::cout << ggg.EdgeExist(0, 1) << '\n';
     std::cout << ggg.VertexExist(0) << '\n';
 
@@ -23,7 +23,7 @@ int main() {
         g.push_back(line);
     }
 
-    AdjacecyListsGraph graph(g);
+    AdjacencyListsGraph graph(g);
 
 //    graph.PrintGraph();
     std::cout << graph;
@@ -76,7 +76,7 @@ int main() {
               << "edges = " << graph1.GetCntEdge() << '\n';
 
     std::cout << "adding edge 1 5\n";
-    graph1.AddEdge(1, 5);
+    graph1.AddEdge(1, 3);
 //    graph1.PrintGraph();
     std::cout << graph1;
 

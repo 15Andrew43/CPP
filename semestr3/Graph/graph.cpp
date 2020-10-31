@@ -3,12 +3,11 @@
 #include <stdexcept>
 #include "graph.h"
 
-
 std::ostream& operator<<(std::ostream& os, const Graph& graph) {
-    for (vertex_t i = 0; i < graph.GetCntVertex(); ++i) {
-        std::cout << i << " : ";
-        for (auto j: graph.GetNeighbours(i)) {
-            std::cout << j << ' ';
+    for (vertex_t vertex = 0; vertex < graph.GetCntVertex(); ++vertex) {
+        std::cout << vertex << " : ";
+        for (auto neighbour: graph.GetNeighbours(vertex)) {
+            std::cout << neighbour << ' ';
         }
         std::cout << '\n';
     }
@@ -17,33 +16,30 @@ std::ostream& operator<<(std::ostream& os, const Graph& graph) {
 
 
 
-AdjacecyListsGraph::AdjacecyListsGraph(const std::vector<std::vector<vertex_t>>& graph) : graph_(graph) {
+AdjacencyListsGraph::AdjacencyListsGraph(const std::vector<std::vector<vertex_t>>& graph) : graph_(graph) {
     for (const auto& neighbours: graph_) {
         edge_cnt_ += neighbours.size();
     }
 }
 
-AdjacecyListsGraph::AdjacecyListsGraph(vertex_t vertex_cnt) : graph_(vertex_cnt) {}
+AdjacencyListsGraph::AdjacencyListsGraph(vertex_t vertex_cnt) : graph_(vertex_cnt) {
+}
 
-vertex_t AdjacecyListsGraph::GetCntVertex() const noexcept {
+vertex_t AdjacencyListsGraph::GetCntVertex() const noexcept {
     return graph_.size();
 }
 
-vertex_t AdjacecyListsGraph::GetCntEdge() const noexcept {
+vertex_t AdjacencyListsGraph::GetCntEdge() const noexcept {
     return edge_cnt_;
 }
 
-void AdjacecyListsGraph::AddEdge(vertex_t from, vertex_t to) {
-    try {
-        graph_[from].push_back(to);
-    } catch (const std::exception&) {
-        throw std::invalid_argument("numbers of the vertexes must be >= 0, when you try to add a new edge");
-    }
+void AdjacencyListsGraph::AddEdge(vertex_t from, vertex_t to) {
+    graph_.at(from).push_back(to);
     ++edge_cnt_;
 }
 
-void AdjacecyListsGraph::DeleteEdge(vertex_t from, vertex_t to) {
-    if (! EdgeExist(from, to)) {
+void AdjacencyListsGraph::DeleteEdge(vertex_t from, vertex_t to) {
+    if (!EdgeExist(from, to)) {
         return;
     }
     auto& neighbours_from = graph_[from];
@@ -55,49 +51,48 @@ void AdjacecyListsGraph::DeleteEdge(vertex_t from, vertex_t to) {
     }
 }
 
-bool AdjacecyListsGraph::EdgeExist(vertex_t from, vertex_t to) const noexcept {
+bool AdjacencyListsGraph::EdgeExist(vertex_t from, vertex_t to) const noexcept {
     if (from > GetCntVertex() - 1 || to > GetCntVertex() - 1 || from < 0 || to < 0) {
         return false;
     }
     auto& neighbours_from = graph_[from];
     auto it = std::find(neighbours_from.begin(), neighbours_from.end(), to);
-    if (it != neighbours_from.end()) {
-        return true;
-    }
-    return false;
+    return it != neighbours_from.end();
 }
 
-bool AdjacecyListsGraph::VertexExist(vertex_t vertex) const noexcept {
+bool AdjacencyListsGraph::VertexExist(vertex_t vertex) const noexcept {
     if (vertex < 0 || vertex > GetCntVertex() - 1) {
         return false;
     }
     return true;
 }
 
-std::vector<vertex_t> AdjacecyListsGraph::GetNeighbours(vertex_t vertex) const {
-    if (VertexExist(vertex)) {
-        return graph_[vertex];
+std::vector<vertex_t> AdjacencyListsGraph::GetNeighbours(vertex_t vertex) const {
+    try {
+        return graph_.at(vertex);
+    } catch (const std::exception&) {
+        return {};
     }
-    return {};
 }
 
-void AdjacecyListsGraph::Transpose() {
-    std::vector<std::vector<vertex_t>> transposed_graph(graph_.size(), std::vector<vertex_t>());
+void AdjacencyListsGraph::Transpose() {
+    std::vector<std::vector<vertex_t>> transposed_graph(graph_.size());
     for (vertex_t vertex = 0; vertex < graph_.size(); ++vertex) {
         for (const auto& neighbour: GetNeighbours(vertex)) {
             transposed_graph[neighbour].push_back(vertex);
         }
     }
-    graph_ = transposed_graph;
-
+    graph_ = std::move(transposed_graph);
+//    graph_.swap(transposed_graph);
 }
 
-Graph* AdjacecyListsGraph::Copy() const {
-    Graph* new_graph_ptr = new AdjacecyListsGraph(graph_);
-    return new_graph_ptr;
+std::shared_ptr<Graph> AdjacencyListsGraph::Copy() const {
+    return std::make_shared<AdjacencyListsGraph>(graph_);
 }
 
-
+//AdjacencyListsGraph::~AdjacencyListsGraph() {
+//    std::cout << "Ppe\n";
+//}
 
 
 AdjacencyMatrixGraph::AdjacencyMatrixGraph(const std::vector<std::vector<vertex_t>>& graph) : graph_(graph) {
@@ -106,7 +101,8 @@ AdjacencyMatrixGraph::AdjacencyMatrixGraph(const std::vector<std::vector<vertex_
     }
 }
 
-AdjacencyMatrixGraph::AdjacencyMatrixGraph(vertex_t vertex_cnt) : graph_(vertex_cnt, std::vector<vertex_t>(vertex_cnt, 0)) {}
+AdjacencyMatrixGraph::AdjacencyMatrixGraph(vertex_t vertex_cnt) : graph_(vertex_cnt, std::vector<vertex_t>(vertex_cnt, 0)) {
+}
 
 vertex_t AdjacencyMatrixGraph::GetCntVertex() const noexcept {
     return graph_.size();
@@ -117,16 +113,12 @@ vertex_t AdjacencyMatrixGraph::GetCntEdge() const noexcept {
 }
 
 void AdjacencyMatrixGraph::AddEdge(vertex_t from, vertex_t to) {
-    try {
-        graph_[from][to] = 1;
-    } catch (const std::exception&) {
-        throw std::invalid_argument("numbers of the vertexes must be >= 0, when you try to add a new edge");
-    }
+    graph_.at(from).at(to) = 1;
     ++edge_cnt_;
 }
 
 void AdjacencyMatrixGraph::DeleteEdge(vertex_t from, vertex_t to) {
-    if (! EdgeExist(from, to)) {
+    if (!EdgeExist(from, to)) {
         return;
     }
     graph_[from][to] = 0;
@@ -144,20 +136,18 @@ bool AdjacencyMatrixGraph::EdgeExist(vertex_t from, vertex_t to) const noexcept 
 }
 
 bool AdjacencyMatrixGraph::VertexExist(vertex_t vertex) const noexcept {
-    if (vertex < 0 || vertex > GetCntVertex() - 1) {
-        return false;
-    }
-    return true;
+    return vertex >= 0 && vertex < GetCntVertex();
 }
 
 std::vector<vertex_t> AdjacencyMatrixGraph::GetNeighbours(vertex_t vertex) const {
     std::vector<vertex_t> neighbours;
-    if (VertexExist(vertex)) {
+    try {
         for (vertex_t j = 0; j < GetCntVertex(); ++j) {
-            if (graph_[vertex][j] != 0) {
+            if (graph_.at(vertex)[j] != 0) {
                 neighbours.push_back(j);
             }
         }
+    } catch (const std::exception&) {
     }
     return neighbours;
 }
@@ -170,7 +160,10 @@ void AdjacencyMatrixGraph::Transpose() {
     }
 }
 
-Graph* AdjacencyMatrixGraph::Copy() const {
-    Graph* new_graph_ptr = new AdjacencyMatrixGraph(graph_);
-    return new_graph_ptr;
+std::shared_ptr<Graph> AdjacencyMatrixGraph::Copy() const {
+    return std::make_shared<AdjacencyMatrixGraph>(graph_);
 }
+
+//AdjacencyMatrixGraph::~AdjacencyMatrixGraph() {
+//    std::cout << "Ppe\n";
+//}
