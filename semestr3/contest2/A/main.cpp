@@ -6,7 +6,6 @@ using Graph = std::vector<std::vector<int>>;
 
 int INFINITY = 1000000;
 
-
  std::vector<int> GetShortestPath(const Graph& graph, int from, int to) {
     std::queue<int> queue;
     std::vector<int> distance(graph.size(), INFINITY);
