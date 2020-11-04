@@ -48,10 +48,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest3/goodK
+CMAKE_SOURCE_DIR = /Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest3/L
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest3/goodK/cmake-build-debug
+CMAKE_BINARY_DIR = /Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest3/L/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest3/goodK/cmake-build-debug/CMakeFiles /Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest3/goodK/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest3/L/cmake-build-debug/CMakeFiles /Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest3/L/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest3/goodK/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest3/L/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named goodK
+# Target rules for targets named L
 
 # Build rule for target.
-goodK: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 goodK
-.PHONY : goodK
+L : cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 L
+.PHONY : L
 
 # fast build rule for target.
-goodK/fast:
-	$(MAKE) -f CMakeFiles/goodK.dir/build.make CMakeFiles/goodK.dir/build
-.PHONY : goodK/fast
+L/fast:
+	$(MAKE) -f CMakeFiles/L.dir/build.make CMakeFiles/L.dir/build
+.PHONY : L/fast
 
 main.o: main.cpp.o
 
@@ -129,7 +129,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/goodK.dir/build.make CMakeFiles/goodK.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/L.dir/build.make CMakeFiles/L.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -138,7 +138,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/goodK.dir/build.make CMakeFiles/goodK.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/L.dir/build.make CMakeFiles/L.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -147,7 +147,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/goodK.dir/build.make CMakeFiles/goodK.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/L.dir/build.make CMakeFiles/L.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -158,7 +158,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... goodK"
+	@echo "... L"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

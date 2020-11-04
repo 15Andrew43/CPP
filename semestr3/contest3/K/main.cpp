@@ -2,6 +2,7 @@
 #include <vector>
 #include <utility>
 #include <algorithm>
+#include <queue>
 
 struct Edge {
     size_t weight;
@@ -12,39 +13,35 @@ struct Edge {
 
 using Graph = std::vector<std::vector<Edge>>;
 
+struct Comp {
+    bool operator()(const Edge& a, const Edge& b) {
+        return a.weight > b.weight;
+    }
+};
+
 
 size_t Prim(const Graph& graph) {
     std::vector<bool> used(graph.size(), false);
-    used[0] = true;
-    std::vector<size_t> distance(graph.size(), 1000000);
     size_t current = 0;
+    used[current] = true;
     size_t weight_mst = 0;
     size_t n_edge_in_mst = 0;
-    std::vector<Edge> heap;
+    std::priority_queue<Edge, std::vector<Edge>, Comp> heap;
     for (const auto& vertex: graph[current]) {
-        heap.push_back(vertex);
+        heap.push(vertex);
     }
-    std::make_heap(heap.begin(), heap.end(), [](const Edge& a, const Edge& b) {
-                                                    return a.weight > b.weight;
-                                                });
+
     while (n_edge_in_mst < graph.size() - 1) {
-        std::pop_heap(heap.begin(), heap.end(), [](const Edge& a, const Edge& b) {
-                                                    return a.weight > b.weight;
-                                                });
-        auto min_weight_edge = heap.back();
-        heap.pop_back();
+        auto min_weight_edge = heap.top();
+        heap.pop();
         if (used[min_weight_edge.to]) {
             continue;
         }
         used[min_weight_edge.to] = true;
         weight_mst += min_weight_edge.weight;
-        for (auto vertex: graph[min_weight_edge.to]) {
-            if (!used[vertex.to] && distance[vertex.to] > min_weight_edge.weight) {
-                distance[vertex.to] = vertex.weight;
-                heap.push_back(vertex);
-                std::push_heap(heap.begin(), heap.end(), [](const Edge& a, const Edge& b) {
-                                                                return a.weight > b.weight;
-                                                            });
+        for (auto edge: graph[min_weight_edge.to]) {
+            if (!used[edge.to]) {
+                heap.push(edge);
             }
         }
         ++n_edge_in_mst;

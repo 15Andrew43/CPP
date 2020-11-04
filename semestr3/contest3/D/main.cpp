@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <queue>
 
-using Graph = std::vector<std::vector<int>>;
+using Graph = std::vector<std::vector<size_t >>;
 int TIME = -1;
 
 enum Status {
@@ -13,7 +13,7 @@ enum Status {
 };
 
 struct DfsStatus {
-    std::vector<Status> statuses;
+    std::vector<Status>& statuses;
     std::vector<int> time_in;
     std::vector<int> time_up;
     int parent;
@@ -21,13 +21,16 @@ struct DfsStatus {
 
 
 
-void DfsVisit(const Graph& graph, int vertex, DfsStatus& dfs_status, std::vector<std::pair<int, int>>& bridges) {
+void DfsVisit(const Graph& graph, size_t vertex, DfsStatus& dfs_status, bool& last_bridge, size_t& cnt_bridges) {
     auto& statuses = dfs_status.statuses;
     auto& time_in = dfs_status.time_in;
     auto& time_up = dfs_status.time_up;
     auto parent = dfs_status.parent;
     statuses[vertex] = Discovered;
     time_in[vertex] = time_up[vertex] = ++TIME;
+
+//    bool last_bridge = false;
+
     for (auto neigbour: graph[vertex]) {
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (parent == neigbour) {
@@ -38,13 +41,16 @@ void DfsVisit(const Graph& graph, int vertex, DfsStatus& dfs_status, std::vector
             time_up[vertex] = std::min(time_up[vertex], time_in[neigbour]);
         } else if (statuses[neigbour] == Undiscovered) {
 //            parent = vertex;
+            last_bridge = true;
             dfs_status.parent = vertex;
-            DfsVisit(graph, neigbour, dfs_status, bridges);
+            DfsVisit(graph, neigbour, dfs_status, last_bridge, cnt_bridges);
             time_up[vertex] = std::min(time_up[vertex], time_up[neigbour]);
-            if (time_in[vertex] < time_up[neigbour]) {
-                int min = std::min(vertex, neigbour);
-                int max = std::max(vertex, neigbour);
-                bridges.emplace_back(min, max);
+            if (time_in[vertex] < time_up[neigbour] && last_bridge) {
+//                int min = std::min(vertex, neigbour);
+//                int max = std::max(vertex, neigbour);
+//                bridges.emplace_back(min, max);
+                ++cnt_bridges;
+                last_bridge = false;
             }
         }
     }
@@ -52,16 +58,18 @@ void DfsVisit(const Graph& graph, int vertex, DfsStatus& dfs_status, std::vector
 }
 
 
-std::vector<std::pair<int, int>> Bridges(const Graph& graph, int vertex) {
-    int infinity_time = 1000000;
-    std::vector<std::pair<int, int>> bridges;
+size_t Bridges(const Graph& graph, size_t vertex, std::vector<Status >& statuses) {
+    size_t infinity_time = 1000000000;
+//    std::vector<std::pair<int, int>> bridges;
+    size_t cnt_bridges = 0;
     DfsStatus dfs_status{
-            std::vector<Status>(graph.size(), Undiscovered),
+            statuses,
             std::vector<int>(graph.size(), -1),
             std::vector<int>(graph.size(), infinity_time),
             -1
     };
-    DfsVisit(graph, vertex, dfs_status, bridges);
+    bool last_bridge = true;
+    DfsVisit(graph, vertex, dfs_status, last_bridge, cnt_bridges);
 
 
 //    for (auto x: dfs_status.time_in) {
@@ -73,87 +81,95 @@ std::vector<std::pair<int, int>> Bridges(const Graph& graph, int vertex) {
 //    }
 ////    std::cout << '\n';
 
-    return bridges;
+    return cnt_bridges;
 }
 
-void DFSVisitForTree(const Graph& graph, int source, std::vector<Status>& statuses,
-                        std::vector<std::pair<int, int>>& bridges, int& vertex_number, Graph& condens_graph) {
-    statuses[source] = Discovered;
+//void DFSVisitForTree(const Graph& graph, int source, std::vector<Status>& statuses,
+//                        std::vector<std::pair<int, int>>& bridges, int& vertex_number, Graph& condens_graph) {
+//    statuses[source] = Discovered;
+//
+//    auto current_number = vertex_number;
+//
+//    for (auto u: graph[source]) {
+//        if (statuses[u] == Undiscovered) {
+//            if (std::find(bridges.begin(), bridges.end(),
+//                    std::make_pair(std::min(source, u), std::max(source, u))) != bridges.end()) {
+//                ++vertex_number;
+//                condens_graph[current_number].push_back(vertex_number);
+//                condens_graph[vertex_number].push_back(current_number);
+//                std::cout << "pep\n";
+//
+//            }
+//            DFSVisitForTree(graph, u, statuses, bridges, vertex_number, condens_graph);
+//        }
+//    }
+//    statuses[source] = Processed;
+//}
 
-    auto current_number = vertex_number;
+//void DFS(const Graph& graph, int source, std::vector<Status>& statuses) {
+//    statuses[source] = Discovered;
+//
+//    for (auto u: graph[source]) {
+//        if (statuses[u] == Undiscovered) {
+//            DFS(graph, u, statuses);
+//        }
+//    }
+//    statuses[source] = Processed;
+//}
 
-    for (auto u: graph[source]) {
-        if (statuses[u] == Undiscovered) {
-            if (std::find(bridges.begin(), bridges.end(),
-                    std::make_pair(std::min(source, u), std::max(source, u))) != bridges.end()) {
-                ++vertex_number;
-                condens_graph[current_number].push_back(vertex_number);
-                condens_graph[vertex_number].push_back(current_number);
-            //    std::cout << "pep\n";
+bool BFS(const Graph& graph) {
+    size_t infinity = 1000000000;
+    std::queue<int> queue;
+    std::vector<int> distance(graph.size(), infinity);
+    size_t  from = 0;
+    distance[from] = 0;
+    size_t cnt = 1;
+    queue.push(from);
 
+    while (!queue.empty()) {
+        int v = queue.front();
+        queue.pop();
+        for (auto u: graph[v]) {
+            if (distance[u] == infinity) {
+                queue.push(u);
+                ++cnt;
+                distance[u] = distance[v] + 1;
             }
-            DFSVisitForTree(graph, u, statuses, bridges, vertex_number, condens_graph);
         }
     }
-    statuses[source] = Processed;
+    return cnt < graph.size();
 }
 
-void DFS(const Graph& graph, int source, std::vector<Status>& statuses) {
-    statuses[source] = Discovered;
-
-    for (auto u: graph[source]) {
-        if (statuses[u] == Undiscovered) {
-            DFS(graph, u, statuses);
-        }
-    }
-    statuses[source] = Processed;
-}
 
 int GetCntTonnels(const Graph& graph) {
-    int vertex_number = -1;
-
+    bool many_components = BFS(graph);
+    size_t cnt_tonnels = 0;
     std::vector<Status> statuses(graph.size(), Undiscovered);
-
-    int n_leaves = 0;
-    int cnt_cycle = 0;
+    auto cnt_last_bridge = 0;
+    int cnt_separate_connected_component = 0;
     for (int i = 0; i < graph.size(); ++i) {
         if (statuses[i] == Undiscovered) {
-        //    std::cout << i << '\n';
-            if (graph[i].size() == 0) {
-                statuses[i] = Processed;
-                n_leaves += 2;
-                continue;
+            ++cnt_separate_connected_component;
+            statuses[i] = Discovered;
+            cnt_last_bridge = Bridges(graph, i, statuses);
+            if (graph[i].size() == 1 && graph[graph[i][0]].size() > 1) {
+                ++cnt_last_bridge;
             }
-            auto bridges = Bridges(graph, i);
-            if (bridges.size() == 0) {
-                n_leaves += 2;
-                ++cnt_cycle;
-                DFS(graph, i, statuses);
-                continue;
+//            std::cout << cnt_last_bridge << '\n';
+            if (many_components && cnt_last_bridge - 2 > 0) {
+                cnt_tonnels += (((cnt_last_bridge - 2) + 1) / 2);
             }
-
-            Graph condens_graph(bridges.size()+1);
-            DFSVisitForTree(graph, bridges[0].first, statuses, bridges, ++vertex_number, condens_graph);
-        //    std::cout << "pep\n";
-
-            for (int j = 0; j < condens_graph.size(); ++j) {
-                if (condens_graph[j].size() == 1) {
-                    ++n_leaves;
-                //    std::cout << "pep\n";
-                }
+            if (!many_components) {
+                cnt_tonnels += ((cnt_last_bridge + 1) / 2);
             }
-            vertex_number = -1;
         }
     }
-
-    if (n_leaves == 2 && cnt_cycle == 1) {
-        return 0;
-    }
-    return (n_leaves+1)/2;
+    cnt_tonnels += (cnt_separate_connected_component > 1 ? cnt_separate_connected_component : 0);
+    return cnt_tonnels;
 }
 
 int main() {
-    int n_buildings, n_tonnels;
+    size_t n_buildings, n_tonnels;
     std::cin >> n_buildings >> n_tonnels;
 
     Graph graph(n_buildings);

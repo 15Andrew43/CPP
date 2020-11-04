@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="K" targetName="K" />
+      <config projectName="goodK" targetName="goodK" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -11,7 +11,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="915cf8f8-cac0-404f-b73a-e46bf7fb4b07" name="Default Changelist" comment="" />
+    <list default="true" id="4bbf7f06-6088-45c0-a696-2bfb6ac68167" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
-  <component name="ProjectId" id="1jmtUEnCw8SPf4EVFZuClDaaoDc" />
+  <component name="ProjectId" id="1jnFq3EY75DWw9kZaxPPIMrH0TR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -44,7 +44,7 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="K" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="K" TARGET_NAME="K" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="K" RUN_TARGET_NAME="K">
+    <configuration name="goodK" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="goodK" TARGET_NAME="goodK" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="goodK" RUN_TARGET_NAME="goodK">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -55,13 +55,13 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="915cf8f8-cac0-404f-b73a-e46bf7fb4b07" name="Default Changelist" comment="" />
-      <created>1604421108125</created>
+      <changelist id="4bbf7f06-6088-45c0-a696-2bfb6ac68167" name="Default Changelist" comment="" />
+      <created>1604432135088</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1604421108125</updated>
-      <workItem from="1604421109890" duration="4879000" />
-      <workItem from="1604426879719" duration="1900000" />
+      <updated>1604432135088</updated>
+      <workItem from="1604432136538" duration="2846000" />
+      <workItem from="1604492712102" duration="850000" />
     </task>
     <servers />
   </component>
