@@ -164,7 +164,7 @@ int GetCntTonnels(const Graph& graph) {
             }
         }
     }
-    cnt_tonnels += (cnt_separate_connected_component > 1 ? cnt_separate_connected_component : 0);
+    cnt_tonnels += (many_components ? cnt_separate_connected_component : 0);
     return cnt_tonnels;
 }
 

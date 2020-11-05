@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest3/D/main.cpp" "/Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest3/D/cmake-build-debug/CMakeFiles/D.dir/main.cpp.o"
+  "/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest3/D/main.cpp" "/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest3/D/cmake-build-debug/CMakeFiles/D.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
