@@ -6,10 +6,10 @@ using weight_t = int ;
 
 struct Edge {
     int to;
-//    weight_t flow;
+    weight_t flow;
     weight_t capacity;
-//    int back;
-    Edge(int to, weight_t capacity) : to(to), capacity(capacity) {
+    int back;
+    Edge(int to, weight_t flow, weight_t capacity, int back) : to(to), flow(flow), capacity(capacity), back(back) {
     }
 
 };
@@ -19,79 +19,38 @@ using Graph = std::vector<std::vector<Edge>>;
 enum Status {
     kUndiscovered = 0,
     kDiscovered = 1,
-    kProcessed = 2
 };
 
-void DfsVisit(const Graph& graph, int from, int to, std::vector<Status>& statuses, std::vector<int>& predecessors) {
+
+int FindFlow(Graph& graph, std::vector<Status>& statuses, int from, int to, weight_t max_flow) {
     statuses[from] = kDiscovered;
-    for (auto neighbour: graph[from]) {
-        if (statuses[neighbour.to] == kUndiscovered && neighbour.capacity > 0) {
-            predecessors[neighbour.to] = from;
-            DfsVisit(graph, neighbour.to, to,statuses, predecessors);
-        }
+    if (from == to) {
+//        std::cout << max_flow << "\n";
+        return max_flow;
     }
-    statuses[from] = kProcessed;
-}
-
-
-int FindFlow(Graph& graph, int from, int to) {
-    std::vector<Status> statuses(graph.size(), kUndiscovered);
-    std::vector<int> predecessors(graph.size(), -1);
-
-    DfsVisit(graph, from, to, statuses, predecessors);
-
-    std::vector<int> path;
-    int current = to;
-    while (current != -1) {
-        path.push_back(current);
-        current = predecessors[current];
-    }
-
-    for (int i = 0; i < path.size() / 2; ++i) {
-        std::swap(path[i], path[path.size() - 1]);
-    }
-    std::cout << "path\n";
-    for (auto x: path) {
-        std::cout << x + 1 << ' ';
-    }
-    std::cout << '\n';
-
-    int min_flow = 1000000;
-    for (int i = 0; i < path.size() - 1; ++i) {
-        for (int j = 0; j < graph[path[i]].size(); ++j) {
-            if (graph[path[i]][j].to == path[i+1]) {
-                if (graph[path[i]][j].capacity < min_flow) {
-                    min_flow = graph[path[i]][j].capacity;
-                }
-                break;
+    for (auto& edge: graph[from]) {
+        if (statuses[edge.to] == kUndiscovered && edge.capacity - edge.flow > 0) {
+            int cur_flow = FindFlow(graph, statuses, edge.to, to, std::min(max_flow, edge.capacity - edge.flow));
+            if (cur_flow > 0) {
+                edge.flow += cur_flow;
+                graph[edge.to][edge.back].flow -= cur_flow;
+                return cur_flow;
             }
         }
     }
-    for (int i = 0; i < path.size() - 1; ++i) {
-        for (int j = 0; j < graph[path[i]].size(); ++j) {
-            if (graph[path[i]][j].to == path[i+1]) {
-                graph[path[i]][j].capacity -= min_flow;
-                for (int k = 0; k < graph[path[i+1]].size(); ++k) {
-                    if (graph[path[i+1]][k].to == path[i]) {
-                        graph[path[i+1]][k].capacity += min_flow; // ?????????
-                    }
-                }
-            }
-        }
-    }
-    return min_flow;
+    return 0;
 }
 
-int FordFalcon(const Graph& info_graph, int from, int to) {
-    Graph graph = info_graph;
-    int cur_flow = 1000000;
-    int flow = 0;
+int FordFalcon(Graph graph, int from, int to) {
+    int cur_flow;
+    int res_flow = 0;
     do {
-        cur_flow = FindFlow(graph, from, to);
-        flow += cur_flow;
+        std::vector<Status> statuses(graph.size(), kUndiscovered);
+        cur_flow = FindFlow(graph, statuses, from, to, 1000000);
+        res_flow += cur_flow;
     } while (cur_flow > 0);
 
-    return flow;
+    return res_flow;
 }
 
 int main() {
@@ -104,10 +63,19 @@ int main() {
         int from, to, capacity;
         std::cin >> from >> to >> capacity;
         --from, --to;
-        info_graph[from].emplace_back(to, capacity); // info_graph[to].size()
-        info_graph[to].emplace_back(from, 0); // , info_graph[from].size() - 1
+        info_graph[from].emplace_back(to, 0, capacity, info_graph[to].size());
+        info_graph[to].emplace_back(from, 0, 0, info_graph[from].size() - 1);
     }
 
     std::cout << FordFalcon(info_graph, 0, info_graph.size()-1);
     return 0;
 }
+
+/*
+4 5
+1 2 4
+1 3 5
+2 3 2
+2 4 2
+3 4 6
+ */
