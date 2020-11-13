@@ -21,7 +21,7 @@ struct DfsStatus {
 
 
 
-void DfsVisit(const Graph& graph, size_t vertex, DfsStatus& dfs_status, bool& last_bridge, size_t& cnt_bridges) {
+void DfsVisit(const Graph& graph, size_t vertex, DfsStatus& dfs_status, bool& last_bridge, int& cnt_last, bool& is_last, size_t& cnt_bridges) {
     auto& statuses = dfs_status.statuses;
     auto& time_in = dfs_status.time_in;
     auto& time_up = dfs_status.time_up;
@@ -43,14 +43,23 @@ void DfsVisit(const Graph& graph, size_t vertex, DfsStatus& dfs_status, bool& la
 //            parent = vertex;
             last_bridge = true;
             dfs_status.parent = vertex;
-            DfsVisit(graph, neigbour, dfs_status, last_bridge, cnt_bridges);
+            DfsVisit(graph, neigbour, dfs_status, last_bridge, cnt_last, is_last, cnt_bridges);
             time_up[vertex] = std::min(time_up[vertex], time_up[neigbour]);
-            if (time_in[vertex] < time_up[neigbour] && last_bridge) {
-//                int min = std::min(vertex, neigbour);
-//                int max = std::max(vertex, neigbour);
+            if (time_in[vertex] < time_up[neigbour]) {
+                int min = std::min(vertex, neigbour);
+                int max = std::max(vertex, neigbour);
+                if (last_bridge) {
 //                bridges.emplace_back(min, max);
-                ++cnt_bridges;
-                last_bridge = false;
+//                    std::cout << "||| " << min << ' ' << max << '\n';
+                    ++cnt_bridges;
+                    last_bridge = false;
+//                    cnt_last = false;
+                    is_last = false;
+                }
+                if (min == 0) {
+                    ++cnt_last;
+                    is_last = true;
+                }
             }
         }
     }
@@ -69,8 +78,13 @@ size_t Bridges(const Graph& graph, size_t vertex, std::vector<Status >& statuses
             -1
     };
     bool last_bridge = true;
-    DfsVisit(graph, vertex, dfs_status, last_bridge, cnt_bridges);
-
+    int cnt_last = 0;
+    bool is_last = false;
+    DfsVisit(graph, vertex, dfs_status, last_bridge, cnt_last, is_last, cnt_bridges);
+    if (cnt_last == 1 && is_last && cnt_bridges != 1) {
+        ++cnt_bridges;
+    }
+//    std::cout << "cnt = " << cnt_bridges << '\n';
 
 //    for (auto x: dfs_status.time_in) {
 //    //    std::cout << x << ' ';
@@ -80,6 +94,11 @@ size_t Bridges(const Graph& graph, size_t vertex, std::vector<Status >& statuses
 //    //    std::cout << x << ' ';
 //    }
 ////    std::cout << '\n';
+
+//    if (graph[0].size() == 1 && graph[graph[0][0]].size() > 1 && cnt_bridges > 0) {
+//        std::cout << "pep\n";
+//        ++cnt_bridges;
+//    }
 
     return cnt_bridges;
 }
@@ -142,29 +161,28 @@ bool BFS(const Graph& graph) {
 
 
 int GetCntTonnels(const Graph& graph) {
-    bool many_components = BFS(graph);
+//    bool many_components = BFS(graph);
     size_t cnt_tonnels = 0;
     std::vector<Status> statuses(graph.size(), Undiscovered);
     auto cnt_last_bridge = 0;
-    int cnt_separate_connected_component = 0;
-    for (int i = 0; i < graph.size(); ++i) {
-        if (statuses[i] == Undiscovered) {
-            ++cnt_separate_connected_component;
-            statuses[i] = Discovered;
-            cnt_last_bridge = Bridges(graph, i, statuses);
-            if (graph[i].size() == 1 && graph[graph[i][0]].size() > 1) {
-                ++cnt_last_bridge;
-            }
-//            std::cout << cnt_last_bridge << '\n';
-            if (many_components && cnt_last_bridge - 2 > 0) {
-                cnt_tonnels += (((cnt_last_bridge - 2) + 1) / 2);
-            }
-            if (!many_components) {
-                cnt_tonnels += ((cnt_last_bridge + 1) / 2);
-            }
-        }
-    }
-    cnt_tonnels += (cnt_separate_connected_component > 1 ? cnt_separate_connected_component : 0);
+//    int cnt_separate_connected_component = 0;
+    int i = 0;
+//    for (int i = 0; i < graph.size(); ++i) {
+//    if (statuses[i] == Undiscovered) {
+//        ++cnt_separate_connected_component;
+//        statuses[i] = Discovered;
+    cnt_last_bridge = Bridges(graph, i, statuses);
+//        std::cout << "cnt = " << cnt_last_bridge << '\n';
+//        std::cout << cnt_last_bridge << '\n';
+//            if (many_components && cnt_last_bridge - 2 > 0) {
+//                cnt_tonnels += (((cnt_last_bridge - 2) + 1) / 2);
+//            }
+//            if (!many_components) {
+    cnt_tonnels += ((cnt_last_bridge + 1) / 2);
+//            }
+//        }
+//    }
+//    cnt_tonnels += (many_components ? cnt_separate_connected_component : 0);
     return cnt_tonnels;
 }
 

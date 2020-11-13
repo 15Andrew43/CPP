@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest3/heapG/main.cpp
+iostream
+-
+vector
+-
+utility
+-
+algorithm
+-
+queue
+-
+iomanip
+-
+cmath
+-
+

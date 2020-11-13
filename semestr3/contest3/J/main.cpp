@@ -5,8 +5,10 @@ class DSU {
     using elem_t = int;
     mutable std::vector<elem_t> predecessors_;
     std::vector<size_t> ranks_;
+    std::vector<size_t> n_islands_in_connected_component;
+
 public:
-    DSU(size_t n_sets) : predecessors_(n_sets), ranks_(n_sets, 0) {
+    DSU(size_t n_sets) : predecessors_(n_sets), ranks_(n_sets, 0), n_islands_in_connected_component(n_sets, 1) {
         for (elem_t i = 0; i < n_sets; ++i) {
             predecessors_[i] = i;
         }
@@ -28,22 +30,25 @@ public:
         elem1 = FindSet(elem1);
         if (ranks_[elem0] < ranks_[elem1]) {
             predecessors_[elem0] = elem1;
+            n_islands_in_connected_component[elem1] += n_islands_in_connected_component[elem0];
         } else if (ranks_[elem0] > ranks_[elem1]) {
             predecessors_[elem1] = elem0;
+            n_islands_in_connected_component[elem0] += n_islands_in_connected_component[elem1];
         } else {
-            ++ranks_[elem0];
-            predecessors_[elem1] = elem0;
+            if (elem0 != elem1) {
+                ++ranks_[elem0];
+                predecessors_[elem1] = elem0;
+                n_islands_in_connected_component[elem0] += n_islands_in_connected_component[elem1];
+            }
         }
+    }
+    size_t CntIslandsInConnectedComponent(elem_t island) const {
+        return n_islands_in_connected_component[FindSet(island)];
     }
 };
 
 bool InConnectedComponent(size_t n_island, const DSU& dsu) {
-    for (size_t i = 0; i < n_island; ++i) {
-        if (dsu.FindSet(i) != dsu.FindSet(0)) {
-            return false;
-        }
-    }
-    return true;
+    return n_island == dsu.CntIslandsInConnectedComponent(0);
 }
 
 int main() {
@@ -53,13 +58,14 @@ int main() {
 
     DSU dsu(n_island);
 
+    bool is_enough = false;
     for (size_t i = 0; i < n_brigges; ++i) {
         size_t from, to;
         std::cin >> from >> to;
         dsu.Union(from, to);
-        if (InConnectedComponent(n_island, dsu)) {
+        if (!is_enough && InConnectedComponent(n_island, dsu)) {
+            is_enough = true;
             std::cout << i + 1;
-            break;
         }
     }
     return 0;

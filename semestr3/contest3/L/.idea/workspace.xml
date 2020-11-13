@@ -11,7 +11,12 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bfdbed69-ebdf-4e51-a6d5-9801fa3ed847" name="Default Changelist" comment="" />
+    <list default="true" id="bfdbed69-ebdf-4e51-a6d5-9801fa3ed847" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/L.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/L.dir/main.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/L" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/L" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +34,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -59,7 +65,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604509193705</updated>
+<<<<<<< HEAD
       <workItem from="1604509196289" duration="5050000" />
+=======
+      <workItem from="1604509196289" duration="5006000" />
+      <workItem from="1604601688380" duration="4871000" />
+      <workItem from="1604828288397" duration="3101000" />
+>>>>>>> adab9a5fe204289d380b2a3d612433bb82a53d58
     </task>
     <servers />
   </component>
@@ -71,7 +83,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
