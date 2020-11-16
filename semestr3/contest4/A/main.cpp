@@ -9,17 +9,13 @@ struct Edge {
 
 
 std::vector<int> FordBellman(const std::vector<Edge>& edges, size_t n_vertexes, size_t start) {
-    int infinity = 30000;
+    const int infinity = 30000;
     std::vector<int> distance(n_vertexes, infinity);
     distance[start] = 0;
-    for (size_t i = 0; i < n_vertexes; ++i) {
+    for (size_t i = 0; i < n_vertexes - 1; ++i) {
         for (auto& edge: edges) {
-            size_t from, to;
-            int weight;
-            from = edge.from;
-            to = edge.to;
-            weight = edge.weight;
-            if (distance[from] != 30000 && distance[to] > distance[from] + weight) {
+            auto [from, to, weight] = edge;
+            if (distance[from] != infinity && distance[to] > distance[from] + weight) {
                 distance[to] = distance[from] + weight;
             }
         }
