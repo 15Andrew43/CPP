@@ -24,8 +24,8 @@ bool Relax(size_t vertex, const AdjacentVertex& adjacent_vertex, std::vector<siz
 }
 
 size_t Dijkstra(const Graph& graph, const Info& info, const size_t start, const size_t finish) {
-    std::vector<bool> used(info.n_floor, false);
-    std::vector<size_t> money_to_reach(info.n_floor, infinity);
+    std::vector<bool> used(info.max+1, false);
+    std::vector<size_t> money_to_reach(info.max+1, infinity);
     money_to_reach[start] = 0;
     std::priority_queue<std::pair<size_t, size_t>, std::vector<std::pair<size_t, size_t>>, std::greater<std::pair<size_t, size_t>>> heap;
     heap.push(std::make_pair(money_to_reach[start], start));
@@ -36,6 +36,7 @@ size_t Dijkstra(const Graph& graph, const Info& info, const size_t start, const 
             continue;
         }
         used[vertex] = true;
+//        std::cout << vertex << '\n';
 
         if (vertex < info.max - 1 && Relax(vertex, {vertex + 1, info.money_to_up}, money_to_reach)) {
             heap.push(std::make_pair(money_to_reach[vertex + 1], vertex + 1));
@@ -44,6 +45,8 @@ size_t Dijkstra(const Graph& graph, const Info& info, const size_t start, const 
             heap.push(std::make_pair(money_to_reach[vertex - 1], vertex - 1));
         }
         for (const auto& adjacent_vertex: graph[vertex]) {
+//            std::cout << "pep\n";
+//            std::cout << money_to_reach[vertex] << '+' << adjacent_vertex.weight << "   " << money_to_reach[adjacent_vertex.to] << '\n';
             if (Relax(vertex, adjacent_vertex, money_to_reach)) {
                 heap.push(std::make_pair(money_to_reach[adjacent_vertex.to], adjacent_vertex.to));
             }
@@ -69,6 +72,9 @@ int main() {
             std::cin >> stops[j];
             if (stops[j] > max) {
                 max = stops[j];
+                --max;
+                while (graph.size() <= max)
+                    graph.push_back(std::vector<AdjacentVertex>());
             }
             --stops[j];
         }
@@ -78,6 +84,14 @@ int main() {
         }
     }
 
+    std::cout << "++++++++++++++++++++++++++++++++++++++++++=====\n";
+    for (int i = 0; i < graph.size(); ++i) {
+        for (int j = 0; j < graph[i].size(); ++j) {
+            std::cout << graph[i][j].to << ' ';
+        }
+        std::cout << '\n';
+    }
+    std::cout << "++++++++++++++++++++++++++++++++++++++++++==\n";
     Info info = {n_floor, money_to_up, money_to_down, money_to_in, money_to_out, cnt_elevators, max};
 
     std::cout << Dijkstra(graph, info, 0, n_floor-1);
