@@ -6,6 +6,7 @@
 struct AdjacentVertex {
     size_t to;
     size_t weight;
+    size_t n_elevant;
 };
 
 size_t infinity = 2009000999;
@@ -36,7 +37,6 @@ size_t Dijkstra(const Graph& graph, const Info& info, const size_t start, const 
             continue;
         }
         used[vertex] = true;
-//        std::cout << vertex << '\n';
 
         if (vertex < info.max - 1 && Relax(vertex, {vertex + 1, info.money_to_up}, money_to_reach)) {
             heap.push(std::make_pair(money_to_reach[vertex + 1], vertex + 1));
@@ -45,18 +45,12 @@ size_t Dijkstra(const Graph& graph, const Info& info, const size_t start, const 
             heap.push(std::make_pair(money_to_reach[vertex - 1], vertex - 1));
         }
         for (const auto& adjacent_vertex: graph[vertex]) {
-//            std::cout << "pep\n";
-//            std::cout << money_to_reach[vertex] << '+' << adjacent_vertex.weight << "   " << money_to_reach[adjacent_vertex.to] << '\n';
-            if (adjacent_vertex.to > vertex) {
-                if (Relax(vertex, adjacent_vertex, money_to_reach)) {
-                    heap.push(std::make_pair(money_to_reach[adjacent_vertex.to], adjacent_vertex.to));
-                }
-            } else {
-                if (Relax(vertex, adjacent_vertex, money_to_reach)) {
-                    heap.push(std::make_pair(money_to_reach[adjacent_vertex.to], adjacent_vertex.to));
-                }
+            if (Relax(vertex, adjacent_vertex, money_to_reach)) {
+                heap.push(std::make_pair(money_to_reach[adjacent_vertex.to], adjacent_vertex.to));
+            }
+            if (adjacent_vertex.to < vertex) {
                 for (const auto& adjacent_under_vertex: graph[adjacent_vertex.to]) {
-                    if (adjacent_under_vertex.to > adjacent_vertex.to) {
+                    if (adjacent_under_vertex.n_elevant == adjacent_vertex.n_elevant) {
                         if (Relax(vertex, adjacent_under_vertex, money_to_reach)) {
                             heap.push(std::make_pair(money_to_reach[adjacent_under_vertex.to], adjacent_under_vertex.to));
                         }
@@ -92,19 +86,11 @@ int main() {
             --stops[j];
         }
         for (size_t j = 1; j < cnt_stops; ++j) {
-            graph[stops[0]].push_back({stops[j], money_to_in + money_to_out});
-            graph[stops[j]].push_back({stops[0], money_to_in + money_to_out});
+            graph[stops[0]].push_back({stops[j], money_to_in + money_to_out, i});
+            graph[stops[j]].push_back({stops[0], money_to_in + money_to_out, i});
         }
     }
 
-//    std::cout << "++++++++++++++++++++++++++++++++++++++++++=====\n";
-//    for (int i = 0; i < graph.size(); ++i) {
-//        for (int j = 0; j < graph[i].size(); ++j) {
-//            std::cout << graph[i][j].to << ' ';
-//        }
-//        std::cout << '\n';
-//    }
-//    std::cout << "++++++++++++++++++++++++++++++++++++++++++==\n";
     Info info = {n_floor, money_to_up, money_to_down, money_to_in, money_to_out, cnt_elevators, max};
 
     std::cout << Dijkstra(graph, info, 0, n_floor-1);
