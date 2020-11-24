@@ -1,0 +1,3 @@
+/Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest5/B/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest5/B/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/VasilyBorovets/Desktop/PROGA/Proga2020-2021/Algorithms/semestr3/contest5/B/cmake-build-debug/CMakeFiles/B.dir

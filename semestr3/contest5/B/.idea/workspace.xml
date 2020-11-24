@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="O" targetName="O" />
+      <config projectName="B" targetName="B" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -11,7 +11,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="11fd4308-d801-4eb4-858c-1e431936afc1" name="Default Changelist" comment="" />
+    <list default="true" id="53e7d87f-6364-44d9-b5d4-696d087dc4c7" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,14 +21,14 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
-  <component name="ProjectId" id="1kTo77gIq693Nsh1OtvAmi65AES" />
+  <component name="ProjectId" id="1kjx1BNbg58E1ZeWnvWEFPGbNDJ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -43,7 +43,7 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="O" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="O" TARGET_NAME="O" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="O" RUN_TARGET_NAME="O">
+    <configuration name="B" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="B" TARGET_NAME="B" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="B" RUN_TARGET_NAME="B">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -54,13 +54,12 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="11fd4308-d801-4eb4-858c-1e431936afc1" name="Default Changelist" comment="" />
-      <created>1605733771594</created>
+      <changelist id="53e7d87f-6364-44d9-b5d4-696d087dc4c7" name="Default Changelist" comment="" />
+      <created>1606227584940</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1605733771594</updated>
-      <workItem from="1605733773876" duration="4724000" />
-      <workItem from="1606162097527" duration="30000" />
+      <updated>1606227584940</updated>
+      <workItem from="1606227591863" duration="8291000" />
     </task>
     <servers />
   </component>
@@ -72,9 +71,7 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
