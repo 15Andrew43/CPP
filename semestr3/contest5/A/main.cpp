@@ -2,13 +2,11 @@
 #include <vector>
 
 
-std::vector<size_t> BuildPartialSumArray(size_t cnt_solders) {
-    std::vector<size_t> partial_sum_array(cnt_solders);
+std::vector<size_t> BuildPartialSumArray(size_t cnt_solders, const std::vector<size_t>& awards) {
+    std::vector<size_t> partial_sum_array(cnt_solders+1);
     partial_sum_array[0] = 0;
     for (size_t i = 1; i < cnt_solders + 1; ++i) {
-        size_t award;
-        std::cin >> award;
-        partial_sum_array[i] = award + partial_sum_array[i-1];
+        partial_sum_array[i] = awards[i-1] + partial_sum_array[i-1];
     }
     return partial_sum_array;
 }
@@ -16,8 +14,13 @@ std::vector<size_t> BuildPartialSumArray(size_t cnt_solders) {
 int main() {
     size_t cnt_solders;
     std::cin >> cnt_solders;
-
-    auto partial_sum_array = BuildPartialSumArray(cnt_solders);
+    std::vector<size_t> awards;
+    for (size_t i = 0; i < cnt_solders; ++i) {
+        size_t award;
+        std::cin >> award;
+        awards.push_back(award);
+    }
+    auto partial_sum_array = BuildPartialSumArray(cnt_solders, awards);
 
     size_t cnt_requests;
     std::cin >> cnt_requests;

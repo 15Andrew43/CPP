@@ -12,13 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="53e7d87f-6364-44d9-b5d4-696d087dc4c7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../A/cmake-build-debug/A" beforeDir="false" afterPath="$PROJECT_DIR$/../A/cmake-build-debug/A" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../A/cmake-build-debug/CMakeFiles/A.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/../A/cmake-build-debug/CMakeFiles/A.dir/main.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../A/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../A/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/B" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/B" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/B.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/B.dir/main.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,7 +34,6 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -71,11 +66,7 @@
       <updated>1606227584940</updated>
       <workItem from="1606227591863" duration="8649000" />
       <workItem from="1606398997287" duration="2384000" />
-      <workItem from="1606401422256" duration="633000" />
-      <workItem from="1606403235048" duration="67000" />
-      <workItem from="1606403318905" duration="2000" />
-      <workItem from="1606403329177" duration="69000" />
-      <workItem from="1606403782752" duration="5582000" />
+      <workItem from="1606401422256" duration="607000" />
     </task>
     <servers />
   </component>
