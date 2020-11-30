@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/andrew_borovets/Desktop/proga/MIPT/course2/Algorithms/semestr3/contest5/D/main.cpp
+iostream
+-
+vector
+-
+iomanip
+-
+
