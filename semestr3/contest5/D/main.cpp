@@ -2,13 +2,6 @@
 #include <vector>
 #include <iomanip>
 
-void Print(std::vector<uint32_t>& v) {
-    for (auto& x: v) {
-        std::cout << std::setw(10) << x << ' ';
-    }
-    std::cout << '\n';
-}
-
 struct Platoon {
     uint32_t left_ind;
     uint32_t right_ind;
@@ -31,9 +24,8 @@ class SparseTable {
 public:
     SparseTable(std::vector<T>&& values) : min_values(1) {
         auto cnt_solders = values.size();
-        min_values[0] = values; // std::move(vales) ?????????????????????????????????????????????
+        min_values[0] = values;
         auto pow = GetLowerPow2(values.size()).first;
-        std::cout << "k = " << pow << '\n';
         uint32_t cur_len = 1;
         for (uint32_t i = 1; i < pow + 1; ++i) {
             std::vector<uint32_t> min_values_pow(cnt_solders);
@@ -43,12 +35,6 @@ public:
             min_values.push_back(min_values_pow);
             cur_len *= 2;
         }
-        std::cout << "\n=========================================================\n";
-        for (uint64_t i = 0; i < min_values.size(); ++i) {
-            Print(min_values[i]);
-        }
-        std::cout << "=========================================================\n";
-
     }
     T operator()(uint32_t left_ind, uint32_t right_ind) {
         auto [pow, len] = GetLowerPow2(right_ind - left_ind + 1);
@@ -67,6 +53,7 @@ uint32_t NextRightInd(uint32_t cur_right_ind, uint32_t cur_answer, uint32_t ind,
     return (13 * cur_right_ind + 593 + cur_answer + 5 * ind) % cnt_solders + 1;
 }
 
+
 std::vector<uint32_t> GetHights(uint32_t cnt_solders, uint32_t first_height) {
     std::vector<uint32_t> hights(cnt_solders);
     hights[0] = first_height;
@@ -80,24 +67,12 @@ std::vector<uint32_t> GetHights(uint32_t cnt_solders, uint32_t first_height) {
 
 Platoon DoRequests(uint32_t cnt_solders, uint32_t cnt_requests, uint32_t first_height, uint32_t left_ind, uint32_t right_ind) {
     auto hights = GetHights(cnt_solders, first_height);
-    Print(hights);
     SparseTable<uint32_t> sparse_table(std::move(hights));
-    auto min = sparse_table(left_ind, right_ind);
-    std::cout << "___________________________\n";
-    std::cout << "0 - 9 : " << sparse_table(0, 9) << '\n';
-    std::cout << "2 - 3 : " << sparse_table(2, 3) << '\n';
-    std::cout << "6 - 9 : " << sparse_table(6, 9) << '\n';
-    std::cout << "2 - 7 : " << sparse_table(2, 7) << '\n'; // ???????????
-//    std::cout << min << '\n';
+    auto min = sparse_table(std::min(left_ind, right_ind) - 1, std::max(left_ind, right_ind) - 1);
     for (uint32_t i = 1; i < cnt_requests; ++i) {
-        std::cout << "pep\n";
-        left_ind = NextLeftInd(left_ind, min, i+1, cnt_solders);
-        right_ind = NextRightInd(right_ind, min, i+1, cnt_solders);
-        if (left_ind > right_ind) { // ????????????????????????????????????????????????????????
-            std::swap(left_ind, right_ind);
-        }
-        min = sparse_table(left_ind, right_ind);
-        std::cout << left_ind << ' ' << right_ind << ' ' << min << '\n';
+        left_ind = NextLeftInd(left_ind, min, i, cnt_solders);
+        right_ind = NextRightInd(right_ind, min, i, cnt_solders);
+        min = sparse_table(std::min(left_ind, right_ind) - 1, std::max(left_ind, right_ind) - 1);
     }
     return {left_ind, right_ind, min};
 }
@@ -108,9 +83,6 @@ int main() {
     std::cin >> cnt_solders >> cnt_requests >> first_height;
     uint32_t left_ind, right_ind;
     std::cin >> left_ind >> right_ind;
-    if (left_ind > right_ind) {
-        std::swap(left_ind, right_ind);
-    }
     auto [left, right, ans] = DoRequests(cnt_solders, cnt_requests, first_height, left_ind, right_ind);
     std::cout << left << ' ' << right << ' ' << ans;
     return 0;
