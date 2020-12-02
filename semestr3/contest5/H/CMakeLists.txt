@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
-project(goodF)
+project(H)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(goodF main.cpp)
+add_executable(H main.cpp)
