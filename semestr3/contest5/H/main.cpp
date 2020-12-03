@@ -45,19 +45,23 @@ class SegmentTree {
     T normal_element_;
 
     void Push(uint32_t node) {
+        std::cout << "push = " << promise[node] << '\n';
         promise[Left(node)] += promise[node];
         promise[Right(node)] += promise[node];
         promise[node] = 0;
     }
     std::pair<uint32_t, uint32_t> GetBoarders(uint32_t node) {
         auto [pow, res] = GetNotHigherPow2(node);
-        uint32_t cnt_group_elements = (cnt_elements_ + 1) / 2 / res;
-        uint32_t left_board = (cnt_elements_ + 1) / 2 + (node - res) * cnt_group_elements;
+        uint32_t cnt_group_elements = cnt_elements_ / res;
+        uint32_t left_board = cnt_elements_ + (node - res) * cnt_group_elements;
         uint32_t right_board = left_board + cnt_group_elements - 1;
         return {left_board, right_board};
     }
     void Query(uint32_t node, uint32_t ind) {
-        auto [left_board, right_board] = GetBoarders(node);
+        auto [left_board, right_board] = GetBoarders(node); // ?????????????????????
+//        left_board += (cnt_elements_ - 1);
+//        right_board += (cnt_elements_ - 1);
+        std::cout << left_board << ' ' << ind << ' ' << right_board << '\n';
         if (ind < left_board || ind > right_board) {
             return;
         }
@@ -82,6 +86,7 @@ public:
         cnt_elements_ = cnt_elements;
         normal_element_ = normal_element;
         Print(promise);
+        std::cout << "cnt_elem = " << cnt_elements_ << '\n';
     }
     void Update(uint32_t node, uint32_t left_ind, uint32_t right_ind, T value) {
         auto [left_board, right_board] = GetBoarders(node);
@@ -98,7 +103,8 @@ public:
         }
     }
     T operator()(uint32_t ind) {
-        Query(0, ind);
+        std::cout << "pep\n";
+        Query(0, ind + (cnt_elements_ - 1));
         return promise[ind + cnt_elements_];
     }
 };
