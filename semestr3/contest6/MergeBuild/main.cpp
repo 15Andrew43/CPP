@@ -1,6 +1,14 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
+int GetNextPow2(int n) {
+    int cur_n = 1;
+    while (cur_n < n) {
+        cur_n *= 2;
+    }
+    return cur_n;
+}
 
 class Node {
 public:
@@ -72,24 +80,66 @@ class Treap { // Tree + Heap, CartesianTree
         }
     }
 
+    static Node* Find(Node* node, const int& key) {
+        if (node == nullptr) {
+            return nullptr;
+        } else if (node->key < key) {
+            return Find(node->right, key);
+        } else if (node->key > key) {
+            return Find(node->left, key);
+        } else {
+            return node;
+        }
+    }
 
     static std::pair<Node*, Node*> Insert(Node* root, const int& key, const int& priority, const int& value) {
         auto [less_tree, ge_tree] = Split(root, key);
-//        std::cout << (less_tree == nullptr) << ' ' << (ge_tree == nullptr) << '\n';
         Node* new_node = new Node;
         new_node->key = key;
         new_node->priority = priority;
         new_node->value = value;
         return {
                 Merge(
-                    Merge(less_tree, new_node), ge_tree
+                        Merge(less_tree, new_node), ge_tree
                 )
                 , new_node
         };
     }
 
+    template <class FwdIterator>
+    static Node* BuildFromSorted(FwdIterator begin, FwdIterator end) {
+        int cnt_elements = end - begin;
+        int next_pow2 = GetNextPow2(cnt_elements);
+        std::vector<Node*> treaps(next_pow2, nullptr);
+        for (auto it = begin; it != end; ++it) {
+            treaps[it - begin] = new Node{it->key, it->value, it->priority, nullptr, nullptr, nullptr};
+        }
+        while (next_pow2 > 1) {
+            for (int i = 0; i < next_pow2; i += 2) {
+                treaps[i / 2] = Merge(treaps[i], treaps[i + 1]);
+            }
+            next_pow2 /= 2;
+        }
+        return treaps[0];
+    }
 public:
     Treap() = default;
+    template <class FwdIterator>
+    Treap(FwdIterator begin, FwdIterator end) {
+        if (std::is_sorted(begin, end, [](const auto& x, const auto& y) {
+            return x.key < y.key;
+        })) {
+            root_ = BuildFromSorted(begin, end);
+        } else {
+            for (auto it = begin; it != end; ++it) {
+                Insert(it->key, it->priority, it->value);
+            }
+        }
+    }
+
+    Node* Find(const int& key) const {
+        return Find(root_, key);
+    }
 
     std::pair<Node*, Node*> Insert(const int& key, const int& priority, const int& value) {
         auto nodes = Insert(root_, key, priority, value);
@@ -102,25 +152,26 @@ public:
 int main() {
     int cnt_pairs;
     std::cin >> cnt_pairs;
-    std::vector<Node*> nodes(cnt_pairs);
-
-    Treap treap;
+    std::vector<Node> nodes(cnt_pairs);
+    std::vector<int> keys(cnt_pairs);
 
     for (int i = 0; i < cnt_pairs; ++i) {
         int key, priority;
         std::cin >> key >> priority;
-        nodes[i] = treap.Insert(key, priority, i).second;
-//        Node* node = nodes[i];
-//        std::cout << node->key << ' ' << node->priority << "     ";
-//        std::cout << (node->parent ? node->parent->value : 0)
-//                  << ' ' << (node->left ? node->left->value : 0)
-//                  << ' ' << (node->right ? node->right->value : 0) << '\n';
+        Node node{key, i, priority, nullptr, nullptr, nullptr};
+        nodes[i] = node;
+        keys[i] = key;
     }
 
+    std::sort(nodes.begin(), nodes.end(), [](const auto& x, const auto& y) {
+        return x.key < y.key;
+    });
+
+    Treap treap(nodes.begin(), nodes.end());
 
     std::cout << "YES\n";
     for (int i = 0; i < cnt_pairs; ++i) {
-        Node* node = nodes[i];
+        Node* node = treap.Find(keys[i]);
         std::cout << (node->parent ? node->parent->value+1 : 0)
                   << ' ' << (node->left ? node->left->value+1 : 0)
                   << ' ' << (node->right ? node->right->value+1 : 0) << '\n';
