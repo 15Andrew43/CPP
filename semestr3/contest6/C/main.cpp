@@ -19,7 +19,7 @@ class Treap { // Tree + Heap, CartesianTree
     public:
         KeyT key;
 //    int value;
-//    int result;
+        KeyT result;
 //    int promise;
         PriorityT priority;
 
@@ -36,22 +36,23 @@ class Treap { // Tree + Heap, CartesianTree
     };
 
     Node* root_ = nullptr;
-//    static const int kNeutral = 1;
+    static const KeyT kNeutral = 0;
 
     static size_t Size(Node* node) {
         return node ? node->size : 0;
     }
-/*
+
     static int Result(Node* node) {
-        return node ? node->result * node->promise : kNeutral; // neutral element for operation
+//        return node ? node->result * node->promise : kNeutral; // neutral element for operation
+        return node ? node->result : kNeutral; // neutral element for operation
     }
-*/
+
     static void UpdateNode(Node* node) {
         if (node) {
             node->size = 1 + Size(node->left) + Size(node->right);
 //            node->result = operation(Result(node->left),
 //                                     operation(node->value, Result(node->right)));
-            // node->result = Result(node->left) + Result(node->right) + node->value;
+             node->result = Result(node->left) + Result(node->right) + node->key;
         }
     }
 /*
@@ -140,7 +141,7 @@ class Treap { // Tree + Heap, CartesianTree
 
     static std::pair<Node*, Node*> Insert(Node* root, const KeyT& key, const PriorityT& priority) {
         auto [less_tree, ge_tree] = Split(root, key);
-        Node* new_node = new Node{key, priority};
+        Node* new_node = new Node{key, key, priority};
         return {
                 Merge(
                         Merge(less_tree, new_node), ge_tree
@@ -231,8 +232,9 @@ public:
         return Size(root_);
     }
 
-    Node* Find(const KeyT& key) const {
-        return Find(root_, key);
+    KeyT Find(const KeyT& key) const {
+        auto node = Find(root_, key);
+        return (node ? node->key : -1);
     }
 
     std::pair<Node*, Node*> Insert(const KeyT& key, const PriorityT& priority) {
@@ -257,7 +259,9 @@ public:
         return Get(root_, key);
     }
 
-
+    KeyT Sum(const KeyT& left, const KeyT& right) {
+        return 15432;
+    }
 };
 
 std::random_device rd;  //Will be used to obtain a seed for the random number engine
