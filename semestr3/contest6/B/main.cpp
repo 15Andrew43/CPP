@@ -193,39 +193,64 @@ class Treap { // Tree + Heap, CartesianTree
         }
     }
 
-//    template <class FwdIterator>
-//    static Node* BuildFromSorted(FwdIterator begin, FwdIterator end) {
-//        int cnt_elements = end - begin;
-//        int next_pow2 = GetNextPow2(cnt_elements);
-//        std::vector<Node*> treaps(next_pow2, nullptr);
-//        for (auto it = begin; it != end; ++it) {
-//            treaps[it - begin] = new Node{it->key, it->priority};
-//        }
-//        while (next_pow2 > 1) {
-//            for (int i = 0; i < next_pow2; i += 2) {
-//                treaps[i / 2] = Merge(treaps[i], treaps[i + 1]);
-//            }
-//            next_pow2 /= 2;
-//        }
-//        return treaps[0];
-//    }
+    template <class FwdIterator>
+    static Node* BuildFromSorted(FwdIterator begin, FwdIterator end) {
+        int cnt_elements = end - begin;
+        int next_pow2 = GetNextPow2(cnt_elements);
+        std::vector<Node*> treaps(next_pow2, nullptr);
+        for (auto it = begin; it != end; ++it) {
+            treaps[it - begin] = new Node{it->key, it->priority};
+        }
+        while (next_pow2 > 1) {
+            for (int i = 0; i < next_pow2; i += 2) {
+                treaps[i / 2] = Merge(treaps[i], treaps[i + 1]);
+            }
+            next_pow2 /= 2;
+        }
+        return treaps[0];
+    }
+    Node* Copy(const Node* other_node) {
+        if (other_node == nullptr) {
+            return nullptr;
+        }
+        Node* node = new Node;
+        node->size = other_node->size;
+        node->priority = other_node->priority;
+        node->key = other_node->key;
+        SetLeft(node, Copy(other_node->left));
+        SetRight(node, Copy(other_node->right));
+        return node;
+    }
 public:
     Treap() = default;
+    template <class FwdIterator>
+    Treap(FwdIterator begin, FwdIterator end) {
+        if (std::is_sorted(begin, end, [](const auto& x, const auto& y) {
+            return x.key < y.key;
+        })) {
+            root_ = BuildFromSorted(begin, end);
+        } else {
+            for (auto it = begin; it != end; ++it) {
+                Insert(it->key, it->priority);
+            }
+        }
+    }
     ~Treap() {
         delete root_;
     }
-//    template <class FwdIterator>
-//    Treap(FwdIterator begin, FwdIterator end) {
-//        if (std::is_sorted(begin, end, [](const auto& x, const auto& y) {
-//            return x.key < y.key;
-//        })) {
-//            root_ = BuildFromSorted(begin, end);
-//        } else {
-//            for (auto it = begin; it != end; ++it) {
-//                Insert(it->key, it->priority);
-//            }
-//        }
-//    }
+    Treap(const Treap& other) {
+        root_ = Copy(other.root_);
+    }
+    Treap(Treap&& other) {
+        root_ = other.root_;
+        other.root_ = nullptr;
+    }
+    Treap operator=(const Treap& other) {
+        delete root_;
+        root_ = Copy(other.root_);
+        return *this;
+    }
+
 
     size_t Size() const {
         return Size(root_);
@@ -313,5 +338,6 @@ int main() {
             }
         }
     }
+
     return 0;
 }
