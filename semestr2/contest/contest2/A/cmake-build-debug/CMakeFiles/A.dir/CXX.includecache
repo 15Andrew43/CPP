@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/andrew_borovets/Desktop/proga/PROGA/Proga2019-2020/c++/2sem/contest/contest2/A/main.cpp
+iostream
+-
+cstdlib
+-
+math.h
+-
+cstring
+-
+vector
+-
+

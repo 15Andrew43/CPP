@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++   -std=c++14 -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/GoogleTestDemo.dir/test.cpp.o  -o ../../bin/GoogleTestDemo ../lib/libgtestd.a ../lib/libgtest_maind.a ../lib/libgtestd.a 

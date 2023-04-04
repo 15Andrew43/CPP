@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/andrew_borovets/Desktop/proga/PROGA/Proga2019-2020/c++/2sem/contest/contest3/shared_ptr/main.cpp
+iostream
+-
+shared_ptr.h
+/Users/andrew_borovets/Desktop/proga/PROGA/Proga2019-2020/c++/2sem/contest/contest3/shared_ptr/shared_ptr.h
+
+/Users/andrew_borovets/Desktop/proga/PROGA/Proga2019-2020/c++/2sem/contest/contest3/shared_ptr/shared_ptr.h
+cstdio
+-
+algorithm
+-
+string
+-
+

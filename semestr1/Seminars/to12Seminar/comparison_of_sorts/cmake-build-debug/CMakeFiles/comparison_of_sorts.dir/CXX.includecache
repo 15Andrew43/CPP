@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/andrew_borovets/Desktop/c++/to12Seminar/comparison_of_sorts/QuickSort.h
+
+/Users/andrew_borovets/Desktop/c++/to12Seminar/comparison_of_sorts/ShakerSort.h
+
+/Users/andrew_borovets/Desktop/c++/to12Seminar/comparison_of_sorts/main.cpp
+iostream
+-
+cstdlib
+-
+ctime
+-
+cstring
+-
+ShakerSort.h
+/Users/andrew_borovets/Desktop/c++/to12Seminar/comparison_of_sorts/ShakerSort.h
+QuickSort.h
+/Users/andrew_borovets/Desktop/c++/to12Seminar/comparison_of_sorts/QuickSort.h
+fstream
+-
+

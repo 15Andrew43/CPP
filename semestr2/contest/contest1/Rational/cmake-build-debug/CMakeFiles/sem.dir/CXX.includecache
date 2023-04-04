@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/VasilyBorovets/Desktop/Proga2019-2020/c++/2sem/contest/Rational/main.cpp
+iostream
+-
+cstdlib
+-
+cstring
+-
+
